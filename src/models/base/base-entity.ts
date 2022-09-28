@@ -62,9 +62,9 @@ export class BaseEntity {
                 headers: headers,
             };
 
-            if (JuspayEnv.getConnectTimeout()) {
+            /*if (JuspayEnv.getConnectTimeout()) {
                 options = { ...options, ...{ timeout: JuspayEnv.getConnectTimeout() } };
-            }
+            }*/
 
             if (method == RequestMethod.GET) {
                 options.method = RequestMethod.GET;
