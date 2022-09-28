@@ -34,8 +34,8 @@ export class Card extends BaseEntity {
      */
     constructor(params: any) {
         super();
-        for (var key of Object.values(Object.keys(params))) {
-            var newKey = this.camelize(key);
+        for (let key of Object.values(Object.keys(params))) {
+            let newKey = this.camelize(key);
             this[newKey] = params[key];
         }
     }
@@ -57,7 +57,7 @@ export class Card extends BaseEntity {
             throw new InvalidRequestException();
         }
 
-        var response = this.apiCall(Endpoints.Card.ADD, params, RequestMethod.POST, requestOptions);
+        let response = this.apiCall(Endpoints.Card.ADD, params, RequestMethod.POST, requestOptions);
         return new Card(response);
     }
 
@@ -78,13 +78,13 @@ export class Card extends BaseEntity {
             throw new InvalidRequestException();
         }
 
-        var response: any = this.apiCall(Endpoints.Card.LIST, params, RequestMethod.GET, requestOptions);
-        var cardArray = Array();
+        let response: any = this.apiCall(Endpoints.Card.LIST, params, RequestMethod.GET, requestOptions);
+        let cardArray = Array();
 
         if ("cards" in response) {
             cardArray = response.cards;
 
-            for (var i = 0; i < cardArray.length; i++) {
+            for (let i = 0; i < cardArray.length; i++) {
                 cardArray[i] = new Card(cardArray[i]);
             }
         }
@@ -109,7 +109,7 @@ export class Card extends BaseEntity {
             throw new InvalidRequestException();
         }
 
-        var response: any = this.apiCall(Endpoints.Card.DELETE, params, RequestMethod.POST, requestOptions);
+        let response: any = this.apiCall(Endpoints.Card.DELETE, params, RequestMethod.POST, requestOptions);
         return response.deleted;
     }
 

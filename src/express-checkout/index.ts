@@ -1,4 +1,4 @@
-/*! bc-justpay-sdk
+/*! bc-juspay-sdk
 //@ File: index.ts
 //@ Description: Exports express checkout functionality.
 */

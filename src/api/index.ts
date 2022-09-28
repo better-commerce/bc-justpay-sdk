@@ -1,4 +1,4 @@
-/*! bc-justpay-sdk
+/*! bc-juspay-sdk
 //@ File: api/index.ts
 //@ Description: Publishes common entry point for executing api calls.
 */

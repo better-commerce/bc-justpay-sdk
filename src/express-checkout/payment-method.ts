@@ -21,8 +21,8 @@ export class PaymentMethod extends BaseEntity {
      */
     constructor(params: any) {
         super();
-        for (var key of Object.values(Object.keys(params))) {
-            var newKey = this.camelize(key);
+        for (let key of Object.values(Object.keys(params))) {
+            let newKey = this.camelize(key);
             this[newKey] = params[key];
         }
     }
@@ -45,13 +45,13 @@ export class PaymentMethod extends BaseEntity {
         }
 
         const url = stringFormat(Endpoints.PaymentMethods.LIST, { merchantId: merchantId });
-        var response: any = this.apiCall(url, undefined, RequestMethod.GET, requestOptions);
-        var paymentMethods = Array();
+        let response: any = this.apiCall(url, undefined, RequestMethod.GET, requestOptions);
+        let paymentMethods = Array();
 
         if ("payment_methods" in response) {
             paymentMethods = response.payment_methods;
 
-            for (var i = 0; i < paymentMethods.length; i++) {
+            for (let i = 0; i < paymentMethods.length; i++) {
                 paymentMethods[i] = new PaymentMethod(paymentMethods[i]);
             }
         }

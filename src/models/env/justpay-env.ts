@@ -14,32 +14,44 @@ export class JuspayEnv {
    *
    * @property string
    */
+  static merchantId: string;
+
+  /**
+   *
+   * @property string
+   */
   static apiKey: string;
+
   /**
    *
    * @property string
    */
   static apiVersion: string;
+
   /**
    *
    * @property string
    */
   static baseUrl: string;
+
   /**
    *
    * @property int
    */
   static connectTimeout: number;
+
   /**
    *
    * @property int
    */
   static readTimeout: number;
+
   /**
    *
    * @property string
    */
   static sdkVersion: string;
+
   /**
    *
    * @property JuspayEnv
@@ -60,6 +72,7 @@ export class JuspayEnv {
     if (JuspayEnv.thisObj != undefined) {
       return JuspayEnv.thisObj;
     } else {
+      JuspayEnv.merchantId = "";
       JuspayEnv.apiKey = "";
       JuspayEnv.apiVersion = "2021-03-25";
       JuspayEnv.baseUrl = JuspayEnv.SANDBOX_BASE_URL;
@@ -72,55 +85,40 @@ export class JuspayEnv {
   }
 
   /**
-   * Initializes the Juspay ExpressCheckout payment environment
-   * with given API Key.
+   * Initializes the Juspay ExpressCheckout payment environment.
    *
-   * @param string apiKey
+   * @param  merchantId               {String} 
+   * @param  apiKey                   {string}
+   * @param  baseUrl                  {string}
+   * @param  connectTimeout           {number}
+   * @param  readTimeout              {number}
    *
    * @return JuspayEnv
    */
-  withApiKey(apiKey) {
+  static withCredentials(merchantId: string, apiKey: string, baseUrl?: string, connectTimeout?: number, readTimeout?: number) {
+    JuspayEnv.merchantId = merchantId;
     JuspayEnv.apiKey = apiKey;
+
+    if (baseUrl) {
+      JuspayEnv.baseUrl = baseUrl;
+    }
+
+    if (connectTimeout) {
+      JuspayEnv.connectTimeout = connectTimeout;
+    }
+
+    if (readTimeout) {
+      JuspayEnv.readTimeout = readTimeout;
+    }
     return this;
   }
 
   /**
-   * Initializes the Juspay ExpressCheckout payment environment
-   * with given Base URL.
-   *
-   * @param string baseUrl
-   *
-   * @return JuspayEnv
-   */
-  withBaseUrl(baseUrl) {
-    JuspayEnv.baseUrl = baseUrl;
-    return this;
-  }
-
-  /**
-   * Initializes the Juspay ExpressCheckout payment environment
-   * with given connect timeout.
-   *
-   * @param int connectTimeout
-   *
-   * @return JuspayEnv
-   */
-  withConnectTimeout(connectTimeout) {
-    JuspayEnv.connectTimeout = connectTimeout;
-    return this;
-  }
-
-  /**
-   * Initializes the Juspay ExpressCheckout payment environment
-   * with given read timeout.
-   *
-   * @param int readTimeout
-   *
-   * @return JuspayEnv
-   */
-  withReadTimeout(readTimeout) {
-    JuspayEnv.readTimeout = readTimeout;
-    return this;
+  *
+  * @return string
+  */
+  static getMerchantId() {
+    return JuspayEnv.merchantId;
   }
 
   /**

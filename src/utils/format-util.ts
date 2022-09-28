@@ -1,4 +1,4 @@
-/*! bc-justpay-sdk
+/*! bc-juspay-sdk
 //@ File: format-util.ts
 //@ Description: Publishes utility methods for data formatting.
 */
