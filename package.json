@@ -1,6 +1,6 @@
 {
   "name": "bc-juspay-sdk",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "description": "",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -33,6 +33,13 @@
     "expresscheckout",
     "sdk"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:better-commerce/bc-justpay-sdk.git"
+  },
   "author": "BetterCommerce",
-  "license": "MIT"
+  "license": "MIT",
+  "files": [
+    "dist"
+  ]
 }
