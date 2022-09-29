@@ -31,7 +31,7 @@ export class RequestOptions {
    *
    * @return RequestOptions
    */
-  withApiKey(apiKey) {
+  withApiKey(apiKey: string) {
     this.apiKey = apiKey;
     return this;
   }

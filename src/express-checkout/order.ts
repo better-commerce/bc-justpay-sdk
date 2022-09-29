@@ -58,17 +58,17 @@ export class Order extends BaseEntity {
      */
     constructor(params: any) {
         super();
-        for (var key of Object.values(Object.keys(params))) {
-            var newKey = this.camelize(key);
+        for (let key of Object.values(Object.keys(params))) {
+            let newKey = this.camelize(key);
 
             if (newKey == "card") {
                 this[newKey] = new Card(params[key]);
             } else if (newKey == "paymentGatewayResponse") {
                 this[newKey] = new PaymentGatewayResponse(params[key]);
             } else if (newKey == "refunds") {
-                var refunds = Array();
+                let refunds = Array();
 
-                for (var i = 0; i < params[key].length; i++) {
+                for (let i = 0; i < params[key].length; i++) {
                     refunds[i] = new Refund(params[key][i]);
                 }
 
@@ -100,7 +100,7 @@ export class Order extends BaseEntity {
 
         return new Promise(async (resolve, reject) => {
             try {
-                var response: any = await this.apiCall(Endpoints.Order.CREATE, params, RequestMethod.POST, requestOptions);
+                let response: any = await this.apiCall(Endpoints.Order.CREATE, params, RequestMethod.POST, requestOptions);
                 response = Order.addInputParamsToResponse(params, response);
                 response = Order.updateOrderResponseStructure(response);
                 resolve(new Order(response));
@@ -129,7 +129,7 @@ export class Order extends BaseEntity {
 
         return new Promise(async (resolve, reject) => {
             try {
-                var response: any = await this.apiCall(Endpoints.Order.STATUS, params, RequestMethod.POST, requestOptions);
+                let response: any = await this.apiCall(Endpoints.Order.STATUS, params, RequestMethod.POST, requestOptions);
                 response = Order.updateOrderResponseStructure(response);
                 resolve(new Order(response));
             } catch (error) {
@@ -157,7 +157,7 @@ export class Order extends BaseEntity {
 
         return new Promise(async (resolve, reject) => {
             try {
-                var response = await this.apiCall(Endpoints.Order.UPDATE, params, RequestMethod.POST, requestOptions);
+                let response = await this.apiCall(Endpoints.Order.UPDATE, params, RequestMethod.POST, requestOptions);
                 resolve(new Order(response));
             } catch (error) {
                 reject(error);
@@ -180,7 +180,7 @@ export class Order extends BaseEntity {
     static listAll(params: any, requestOptions = undefined) {
         return new Promise(async (resolve, reject) => {
             try {
-                var response = await this.apiCall(Endpoints.Order.LIST, params, RequestMethod.GET, requestOptions);
+                let response = await this.apiCall(Endpoints.Order.LIST, params, RequestMethod.GET, requestOptions);
                 resolve(new OrderList(response));
             } catch (error) {
                 reject(error);
@@ -207,7 +207,7 @@ export class Order extends BaseEntity {
 
         return new Promise(async (resolve, reject) => {
             try {
-                var response: any = await this.apiCall(Endpoints.Order.REFUND, params, RequestMethod.POST, requestOptions);
+                let response: any = await this.apiCall(Endpoints.Order.REFUND, params, RequestMethod.POST, requestOptions);
                 response = Order.updateOrderResponseStructure(response);
                 resolve(new Order(response));
             } catch (error) {
@@ -225,7 +225,7 @@ export class Order extends BaseEntity {
      */
     static updateOrderResponseStructure(response: any) {
         if ("card" in response) {
-            var card = response.card;
+            let card = response.card;
             card.card_exp_month = card.expiry_month;
             card.card_exp_year = card.expiry_year;
             delete card.expiry_month;

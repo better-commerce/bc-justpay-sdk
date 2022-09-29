@@ -26,8 +26,8 @@ export class Wallet extends BaseEntity {
      */
     constructor(params: any) {
         super();
-        for (var key of Object.values(Object.keys(params))) {
-            var newKey = this.camelize(key);
+        for (let key of Object.values(Object.keys(params))) {
+            let newKey = this.camelize(key);
 
             if (newKey == "lastRefreshed") {
                 this[newKey] = new Date(params[key]);
@@ -55,7 +55,7 @@ export class Wallet extends BaseEntity {
         }
 
         const url = stringFormat(Endpoints.Wallet.LIST, { customerId: customerId });
-        var response = this.apiCall(url, undefined, RequestMethod.GET, requestOptions);
+        let response = this.apiCall(url, undefined, RequestMethod.GET, requestOptions);
         return new WalletList(response);
     }
 
@@ -77,7 +77,7 @@ export class Wallet extends BaseEntity {
         }
 
         const url = stringFormat(Endpoints.Wallet.REFRESH_BALANCES, { customerId: customerId });
-        var response = this.apiCall(url, undefined, RequestMethod.GET, requestOptions);
+        let response = this.apiCall(url, undefined, RequestMethod.GET, requestOptions);
         return new WalletList(response);
     }
 
@@ -99,10 +99,10 @@ export class Wallet extends BaseEntity {
             throw new InvalidRequestException();
         }
 
-        var params = Object();
+        let params = Object();
         params.gateway = gateway;
         const url = stringFormat(Endpoints.Wallet.CREATE, { customerId: customerId });
-        var response = this.apiCall(url, params, RequestMethod.POST, requestOptions);
+        let response = this.apiCall(url, params, RequestMethod.POST, requestOptions);
         return new Wallet(response);
     }
 
@@ -124,11 +124,11 @@ export class Wallet extends BaseEntity {
             throw new InvalidRequestException();
         }
 
-        var params = Object();
+        let params = Object();
         params.gateway = gateway;
         params.command = "authenticate";
         const url = stringFormat(Endpoints.Wallet.CREATE, { customerId: customerId });
-        var response = this.apiCall(url, params, RequestMethod.POST, requestOptions);
+        let response = this.apiCall(url, params, RequestMethod.POST, requestOptions);
         return new Wallet(response);
     }
 
@@ -149,10 +149,10 @@ export class Wallet extends BaseEntity {
             throw new InvalidRequestException();
         }
 
-        var params = Object();
+        let params = Object();
         params.command = "refresh";
         const url = stringFormat(Endpoints.Wallet.REFRESH_OR_LINK_OR_DELINK, { walletId: walletId });
-        var response = this.apiCall(url, params, RequestMethod.GET, requestOptions);
+        let response = this.apiCall(url, params, RequestMethod.GET, requestOptions);
         return new Wallet(response);
     }
 
@@ -173,10 +173,10 @@ export class Wallet extends BaseEntity {
             throw new InvalidRequestException();
         }
 
-        var params = Object();
+        let params = Object();
         params.command = "authenticate";
         const url = stringFormat(Endpoints.Wallet.AUTHENTICATE, { walletId: walletId });
-        var response = this.apiCall(url, params, RequestMethod.POST, requestOptions);
+        let response = this.apiCall(url, params, RequestMethod.POST, requestOptions);
         return new Wallet(response);
     }
 
@@ -198,11 +198,11 @@ export class Wallet extends BaseEntity {
             throw new InvalidRequestException();
         }
 
-        var params = Object();
+        let params = Object();
         params.command = "link";
         params.otp = otp;
         const url = stringFormat(Endpoints.Wallet.REFRESH_OR_LINK_OR_DELINK, { walletId: walletId });
-        var response = this.apiCall(url, params, RequestMethod.POST, requestOptions);
+        let response = this.apiCall(url, params, RequestMethod.POST, requestOptions);
         return new Wallet(response);
     }
 
@@ -223,10 +223,10 @@ export class Wallet extends BaseEntity {
             throw new InvalidRequestException();
         }
 
-        var params = Object();
+        let params = Object();
         params.command = "delink";
         const url = stringFormat(Endpoints.Wallet.REFRESH_OR_LINK_OR_DELINK, { walletId: walletId });
-        var response = this.apiCall(url, params, RequestMethod.POST, requestOptions);
+        let response = this.apiCall(url, params, RequestMethod.POST, requestOptions);
         return new Wallet(response);
     }
 

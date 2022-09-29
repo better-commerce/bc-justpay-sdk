@@ -1,4 +1,4 @@
-/*! bc-justpay-sdk
+/*! bc-juspay-sdk
 //@ File: constants.ts
 //@ Description: Defines constants.
 */
