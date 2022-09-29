@@ -27,8 +27,8 @@ export class Customer extends BaseEntity {
      */
     constructor(params: any) {
         super();
-        for (var key of Object.values(Object.keys(params))) {
-            var newKey = this.camelize(key);
+        for (let key of Object.values(Object.keys(params))) {
+            let newKey = this.camelize(key);
 
             if (newKey == "dateCreated" || newKey == "lastUpdated") {
                 this[newKey] = new Date(params[key]);
@@ -58,7 +58,7 @@ export class Customer extends BaseEntity {
 
         return new Promise(async (resolve, reject) => {
             try {
-                var response = await this.apiCall(Endpoints.Customer.CREATE_OR_LIST, params, RequestMethod.POST, requestOptions);
+                let response = await this.apiCall(Endpoints.Customer.CREATE_OR_LIST, params, RequestMethod.POST, requestOptions);
                 resolve(response);
             } catch (error) {
                 reject(error);
@@ -88,7 +88,7 @@ export class Customer extends BaseEntity {
         return new Promise(async (resolve, reject) => {
             try {
                 const url = stringFormat(Endpoints.Customer.GET_OR_UPDATE, { id: id });
-                var response = await this.apiCall(url, params, RequestMethod.POST, requestOptions);
+                let response = await this.apiCall(url, params, RequestMethod.POST, requestOptions);
                 resolve(response);
             } catch (error) {
                 reject(error);
@@ -111,7 +111,7 @@ export class Customer extends BaseEntity {
     static listAll(params: any, requestOptions = undefined) {
         return new Promise(async (resolve, reject) => {
             try {
-                var response = await this.apiCall(Endpoints.Customer.CREATE_OR_LIST, params, RequestMethod.GET, requestOptions);
+                let response = await this.apiCall(Endpoints.Customer.CREATE_OR_LIST, params, RequestMethod.GET, requestOptions);
                 resolve(response);
             } catch (error) {
                 reject(error);
@@ -139,7 +139,7 @@ export class Customer extends BaseEntity {
         return new Promise(async (resolve, reject) => {
             try {
                 const url = stringFormat(Endpoints.Customer.GET_OR_UPDATE, { id: id });
-                var response = await this.apiCall(url, undefined, RequestMethod.GET, requestOptions);
+                let response = await this.apiCall(url, undefined, RequestMethod.GET, requestOptions);
                 resolve(response);
             } catch (error) {
                 reject(error);

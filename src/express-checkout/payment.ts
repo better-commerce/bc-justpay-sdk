@@ -23,8 +23,8 @@ export class Payment extends BaseEntity {
      */
     constructor(params: any) {
         super();
-        for (var key of Object.values(Object.keys(params))) {
-            var newKey = this.camelize(key);
+        for (let key of Object.values(Object.keys(params))) {
+            let newKey = this.camelize(key);
             this[newKey] = params[key];
         }
     }
@@ -49,7 +49,7 @@ export class Payment extends BaseEntity {
         params.format = "json";
         return new Promise(async (resolve, reject) => {
             try {
-                var response = await this.apiCall(Endpoints.Payment.TRANSACTIONS, params, RequestMethod.POST, requestOptions, false);
+                let response = await this.apiCall(Endpoints.Payment.TRANSACTIONS, params, RequestMethod.POST, requestOptions, false);
                 response = Payment.updatePaymentResponseStructure(response);
                 resolve(new Payment(response));
             } catch (error) {
@@ -67,14 +67,14 @@ export class Payment extends BaseEntity {
      * @return array
      */
     static updatePaymentResponseStructure(response: any) {
-        var authResp = response.payment.authentication;
+        let authResp = response.payment.authentication;
         response.method = authResp.method;
         response.url = authResp.url;
 
         if (response.method == "POST") {
             response.params = Array();
 
-            for (var key of Object.values(Object.keys(authResp.params))) {
+            for (let key of Object.values(Object.keys(authResp.params))) {
                 response.params[key] = authResp.params[key];
             }
         }

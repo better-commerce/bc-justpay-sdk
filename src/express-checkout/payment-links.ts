@@ -17,8 +17,8 @@ export class PaymentLinks extends BaseEntity {
     */
     constructor(params: any) {
         super();
-        for (var key of Object.values(Object.keys(params))) {
-            var newKey = this.camelize(key);
+        for (let key of Object.values(Object.keys(params))) {
+            let newKey = this.camelize(key);
             this[newKey] = params[key];
         }
     }

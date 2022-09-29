@@ -1,4 +1,4 @@
-/*! bc-justpay-sdk
+/*! bc-juspay-sdk
 //@ File: base-entity.ts
 //@ Description: Encapsulates base functionality.
 */
@@ -42,8 +42,9 @@ export class BaseEntity {
                 requestOptions = RequestOptions.createDefault();
             }
             let headers = {
+                'merchant-id': JuspayEnv.getMerchantId(),
                 'version': JuspayEnv.getApiVersion(),
-                'Content-Type': 'application/x-www-form-urlencoded'
+                'Content-Type': 'application/x-www-form-urlencoded',
             };
 
             if (isAuthRequired) {
@@ -59,9 +60,11 @@ export class BaseEntity {
                     password: ''
                 },*/
                 headers: headers,
-                timeout: JuspayEnv.getConnectTimeout(),
             };
 
+            /*if (JuspayEnv.getConnectTimeout()) {
+                options = { ...options, ...{ timeout: JuspayEnv.getConnectTimeout() } };
+            }*/
 
             if (method == RequestMethod.GET) {
                 options.method = RequestMethod.GET;
@@ -81,14 +84,14 @@ export class BaseEntity {
 
             api(options)
                 .then((response) => {
-                    var responseCode = response.status;
-                    var responseBody = response.data;
+                    let responseCode = response.status;
+                    let responseBody = response.data;
                     if (responseCode >= 200 && responseCode < 300) {
                         resolve(responseBody);
                     } else {
-                        var status = undefined;
-                        var errorCode = undefined;
-                        var errorMessage = undefined;
+                        let status = undefined;
+                        let errorCode = undefined;
+                        let errorMessage = undefined;
 
                         if (responseBody != undefined) {
                             if ("status" in responseBody != undefined) {
@@ -159,7 +162,7 @@ export class BaseEntity {
      * @return array
      */
     static addInputParamsToResponse(params: Array<any>, response: Array<any>) {
-        for (var key of Object.values(Object.keys(params))) {
+        for (let key of Object.values(Object.keys(params))) {
             response[key] = params[key];
         }
         return response;

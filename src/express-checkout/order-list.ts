@@ -15,7 +15,7 @@ export class OrderList extends BaseEntityList {
     constructor(params: any) {
         super(params);
 
-        for (var i = 0; i < params.list.length; i++) {
+        for (let i = 0; i < params.list.length; i++) {
             this.list[i] = new Order(params.list[i]);
         }
     }
