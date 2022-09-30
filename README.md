@@ -5,7 +5,7 @@ Juspay NodeJS SDK enables BetterCommerce client applications to integrate with J
 Use below command for package installation:
 
 ```
-npm install bc-juspay-sdk
+npm install @better-commerce/bc-juspay-sdk
 ```
 
 ## SDK Initialization

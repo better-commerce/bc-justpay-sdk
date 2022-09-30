@@ -1,6 +1,6 @@
 {
-  "name": "bc-juspay-sdk",
-  "version": "0.0.6",
+  "name": "@better-commerce/bc-juspay-sdk",
+  "version": "0.0.1",
   "description": "",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -36,6 +36,9 @@
   "repository": {
     "type": "git",
     "url": "git@github.com:better-commerce/bc-justpay-sdk.git"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/better-commerce"
   },
   "author": "BetterCommerce",
   "license": "MIT",
