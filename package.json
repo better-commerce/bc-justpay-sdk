@@ -1,7 +1,7 @@
 {
   "name": "@better-commerce/bc-juspay-sdk",
-  "version": "0.0.1",
-  "description": "",
+  "version": "0.0.2",
+  "description": "Juspay NodeJS SDK enables BetterCommerce client applications to integrate with JusPay merchant payment system.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "dependencies": {
@@ -35,7 +35,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git@github.com:better-commerce/bc-justpay-sdk.git"
+    "url": "git+ssh://git@github.com/better-commerce/bc-justpay-sdk.git"
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/better-commerce"
@@ -44,5 +44,9 @@
   "license": "MIT",
   "files": [
     "dist"
-  ]
+  ],
+  "bugs": {
+    "url": "https://github.com/better-commerce/bc-justpay-sdk/issues"
+  },
+  "homepage": "https://github.com/better-commerce/bc-justpay-sdk#readme"
 }
