@@ -36,7 +36,7 @@ export class BaseEntity {
      * @throws AuthenticationException
      * @throws InvalidRequestException
      */
-    static apiCall(path: string, params: any, method: string, requestOptions: RequestOptions, isAuthRequired = true) {
+    protected static apiCall(path: string, params: any, method: string, requestOptions: RequestOptions, isAuthRequired = true) {
         return new Promise((resolve, reject) => {
             if (requestOptions == undefined) {
                 requestOptions = RequestOptions.createDefault();
@@ -149,7 +149,7 @@ export class BaseEntity {
      *
      * @return string
      */
-    camelize(input: string, separator: string = "_") {
+    protected camelize(input: string, separator: string = "_") {
 
         return _.camelCase(input);
     }
@@ -161,7 +161,7 @@ export class BaseEntity {
      *
      * @return array
      */
-    static addInputParamsToResponse(params: Array<any>, response: Array<any>) {
+     protected static addInputParamsToResponse(params: Array<any>, response: Array<any>) {
         for (let key of Object.values(Object.keys(params))) {
             response[key] = params[key];
         }

@@ -1,12 +1,16 @@
+// Model Imports
+import { InvalidRequestException } from "../models/exceptions/request/invalid-request-exception";
+
+// Other Imports
 import { Endpoints } from "../constants/constants";
 import { RequestMethod } from "../constants/enums";
 import { BaseEntity } from "../models/base/base-entity";
-import { InvalidRequestException } from "../models/exceptions/request/invalid-request-exception";
 import { Card } from "./card";
 import { OrderList } from "./order-list";
 import { PaymentGatewayResponse } from "./payment-gateway-response";
 import { PaymentLinks } from "./payment-links";
 import { Refund } from "./refund";
+import { stringFormat } from "../utils/format-util";
 
 
 /**
@@ -104,6 +108,18 @@ export class Order extends BaseEntity {
                 response = Order.addInputParamsToResponse(params, response);
                 response = Order.updateOrderResponseStructure(response);
                 resolve(new Order(response));
+            } catch (error) {
+                reject(error);
+            }
+        });
+    }
+
+    static get(params: string, requestOptions = undefined) {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const url = stringFormat(Endpoints.Order.GET, { orderId: params });
+                let response = this.apiCall(url, undefined, RequestMethod.GET, requestOptions);
+                resolve(response);
             } catch (error) {
                 reject(error);
             }

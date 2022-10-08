@@ -13,6 +13,7 @@ export module Endpoints {
         export const ADD = "/card/add";
         export const LIST = "/card/list";
         export const DELETE = "/card/delete";
+        export const BIN_INFO = "/cardbins";
     };
 
     export module Customer {
@@ -22,6 +23,7 @@ export module Endpoints {
 
     export module Order {
         export const CREATE = "/order/create";
+        export const GET = "/orders/{orderId}";
         export const STATUS = "/order/status";
         export const UPDATE = "/order/update";
         export const LIST = "/order/list";
@@ -43,4 +45,8 @@ export module Endpoints {
         export const AUTHENTICATE = "/wallets/{walletId}";
         export const REFRESH_OR_LINK_OR_DELINK = "/wallets/{walletId}";
     };
+
+    export module UPI {
+        export const VERIFY_VPA = "/v2/upi/verify-vpa";
+    }
 }

@@ -1,3 +1,3 @@
-tsc ./src/index.ts
-npm publish
+tsc
+npm publish --access public
 del /s *.js

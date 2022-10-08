@@ -1,8 +1,10 @@
+// Model Imports
+import { InvalidRequestException } from "../models/exceptions/request/invalid-request-exception";
+
 // Other Imports
 import { Endpoints } from "../constants/constants";
 import { RequestMethod } from "../constants/enums";
 import { BaseEntity } from "../models/base/base-entity";
-import { InvalidRequestException } from "../models/exceptions/request/invalid-request-exception";
 
 /**
  * Class Card
@@ -111,6 +113,15 @@ export class Card extends BaseEntity {
 
         let response: any = this.apiCall(Endpoints.Card.DELETE, params, RequestMethod.POST, requestOptions);
         return response.deleted;
+    }
+
+    static binInfo(params: string, requestOptions = undefined) {
+        if (params == undefined || params.length == 0) {
+            throw new InvalidRequestException();
+        }
+
+        let response: any = this.apiCall(`${Endpoints.Card.BIN_INFO}/${params}`, undefined, RequestMethod.GET, requestOptions);
+        return response;
     }
 
 };
