@@ -1,7 +1,10 @@
+// Model Imports
+import { InvalidRequestException } from "../models/exceptions/request/invalid-request-exception";
+
+// Other Imports
 import { Endpoints } from "../constants/constants";
 import { RequestMethod } from "../constants/enums";
 import { BaseEntity } from "../models/base/base-entity";
-import { InvalidRequestException } from "../models/exceptions/request/invalid-request-exception";
 
 
 /**
@@ -41,7 +44,7 @@ export class Payment extends BaseEntity {
      * @throws AuthenticationException
      * @throws InvalidRequestException
      */
-    static create(params: any, requestOptions = undefined) {
+    static creditDebitCardPayment(params: any, requestOptions = undefined) {
         if (params == undefined || params.length == 0) {
             throw new InvalidRequestException();
         }
@@ -49,7 +52,36 @@ export class Payment extends BaseEntity {
         params.format = "json";
         return new Promise(async (resolve, reject) => {
             try {
-                let response = await this.apiCall(Endpoints.Payment.TRANSACTIONS, params, RequestMethod.POST, requestOptions, false);
+                let response = await this.apiCall(`${Endpoints.Payment.TRANSACTIONS}#CardTransaction`, params, RequestMethod.POST, requestOptions, false);
+                response = Payment.updatePaymentResponseStructure(response);
+                resolve(new Payment(response));
+            } catch (error) {
+                reject(error);
+            }
+        });
+    }
+
+    /**
+     *
+     * @param array params
+     * @param RequestOptions|null requestOptions
+     *
+     * @return Payment
+     *
+     * @throws APIConnectionException
+     * @throws APIException
+     * @throws AuthenticationException
+     * @throws InvalidRequestException
+     */
+     static netbankingPayment(params: any, requestOptions = undefined) {
+        if (params == undefined || params.length == 0) {
+            throw new InvalidRequestException();
+        }
+
+        params.format = "json";
+        return new Promise(async (resolve, reject) => {
+            try {
+                let response = await this.apiCall(`${Endpoints.Payment.TRANSACTIONS}#netbanking`, params, RequestMethod.POST, requestOptions, false);
                 response = Payment.updatePaymentResponseStructure(response);
                 resolve(new Payment(response));
             } catch (error) {
