@@ -6,6 +6,7 @@ import { Endpoints } from "../constants/constants";
 import { RequestMethod } from "../constants/enums";
 import { BaseEntity } from "../models/base/base-entity";
 import { stringFormat } from "../utils/format-util";
+import { consoleLog } from "../utils/log-util";
 
 /**
  * Class Customer
@@ -39,7 +40,7 @@ export class Customer extends BaseEntity {
                 this[newKey] = params[key];
             }
         }
-        console.log(this);
+        consoleLog(this);
     }
 
     /**

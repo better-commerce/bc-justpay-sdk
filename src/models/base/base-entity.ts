@@ -10,6 +10,7 @@ import * as querystring from "querystring";
 // Other Imports
 import api from "../../api";
 import { RequestMethod } from "../../constants/enums";
+import { consoleLog } from "../../utils/log-util";
 import { JuspayEnv } from "../env/justpay-env";
 import { APIException } from "../exceptions/api/api-exception";
 import { AuthenticationException } from "../exceptions/generic/authentication-exception";
@@ -124,17 +125,17 @@ export class BaseEntity {
                     if (error.response) {
                         // The request was made and the server responded with a status code
                         // that falls out of the range of 2xx
-                        console.log(error.response.data);
-                        console.log(error.response.status);
-                        console.log(error.response.headers);
+                        consoleLog(error.response.data);
+                        consoleLog(error.response.status);
+                        consoleLog(error.response.headers);
                     } else if (error.request) {
                         // The request was made but no response was received
                         // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
                         // http.ClientRequest in node.js
-                        console.log(error.request);
+                        consoleLog(error.request);
                     } else {
                         // Something happened in setting up the request that triggered an Error
-                        console.log('Error', error.message);
+                        consoleLog('Error: ' + error.message);
                     }
                     reject(error);
                 });
@@ -161,7 +162,7 @@ export class BaseEntity {
      *
      * @return array
      */
-     protected static addInputParamsToResponse(params: Array<any>, response: Array<any>) {
+    protected static addInputParamsToResponse(params: Array<any>, response: Array<any>) {
         for (let key of Object.values(Object.keys(params))) {
             response[key] = params[key];
         }
