@@ -42,6 +42,15 @@ export class Card extends BaseEntity {
         }
     }
 
+    static tokenize(params: any, requestOptions = undefined) {
+        if (params == undefined || params.length == 0) {
+            throw new InvalidRequestException();
+        }
+
+        let response = this.apiCall(Endpoints.Card.TOKENIZE, params, RequestMethod.POST, requestOptions);
+        return new Card(response);
+    }
+
     /**
      *
      * @param array params
