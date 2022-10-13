@@ -48,7 +48,7 @@ export class Card extends BaseEntity {
         }
 
         let response = this.apiCall(Endpoints.Card.TOKENIZE, params, RequestMethod.POST, requestOptions);
-        return new Card(response);
+        return response;
     }
 
     /**
