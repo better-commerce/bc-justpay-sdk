@@ -69,7 +69,8 @@ export class Card extends BaseEntity {
         }
 
         let response = this.apiCall(Endpoints.Card.ADD, params, RequestMethod.POST, requestOptions);
-        return new Card(response);
+        //return new Card(response);
+        return response;
     }
 
     /**
@@ -95,9 +96,9 @@ export class Card extends BaseEntity {
         if ("cards" in response) {
             cardArray = response.cards;
 
-            for (let i = 0; i < cardArray.length; i++) {
+            /*for (let i = 0; i < cardArray.length; i++) {
                 cardArray[i] = new Card(cardArray[i]);
-            }
+            }*/
         }
 
         return cardArray;
