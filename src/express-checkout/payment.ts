@@ -5,7 +5,7 @@ import { InvalidRequestException } from "../models/exceptions/request/invalid-re
 import { Endpoints } from "../constants/constants";
 import { RequestMethod } from "../constants/enums";
 import { BaseEntity } from "../models/base/base-entity";
-
+import { stringFormat } from "../utils/format-util";
 
 /**
  * Class Payment
@@ -73,7 +73,7 @@ export class Payment extends BaseEntity {
      * @throws AuthenticationException
      * @throws InvalidRequestException
      */
-     static netbankingPayment(params: any, requestOptions = undefined) {
+    static netbankingPayment(params: any, requestOptions = undefined) {
         if (params == undefined || params.length == 0) {
             throw new InvalidRequestException();
         }
@@ -115,8 +115,23 @@ export class Payment extends BaseEntity {
         params.format = "json";
         return new Promise(async (resolve, reject) => {
             try {
-                let response = await this.apiCall(`${Endpoints.Payment.TRANSACTIONS}#UPIPay`, params, RequestMethod.POST, requestOptions, false);
+                let response: any = await this.apiCall(`${Endpoints.Payment.TRANSACTIONS}#UPIPay`, params, RequestMethod.POST, requestOptions, false);
                 //response = Payment.updatePaymentResponseStructure(response);
+                if (response?.payment?.sdk_params) {
+                    const sdk_params = response?.payment?.sdk_params;
+                    const urlFormat = "upi://pay?tr={tr}&tid={tid}&pa={pa}&mc={mcc}&pn={pn}&am={am}&cu={cu}&tn={tn}";
+                    const upiIntentUrl = stringFormat(urlFormat, {
+                        tr: sdk_params?.tr,
+                        tid: response?.txn_id,
+                        pa: sdk_params?.merchant_vpa,
+                        mcc: sdk_params?.mcc,
+                        pn: sdk_params?.merchant_name,
+                        am: sdk_params?.mam,
+                        cu: sdk_params?.currency,
+                        tn: sdk_params?.tn
+                    })
+                    response = { ...response, ...{ upiIntentUrl: upiIntentUrl } };
+                }
                 resolve(response);
             } catch (error) {
                 reject(error);
