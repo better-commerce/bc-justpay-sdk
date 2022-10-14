@@ -10,6 +10,7 @@ export module Endpoints {
     };
 
     export module Card {
+        export const TOKENIZE = "/card/tokenize";
         export const ADD = "/card/add";
         export const LIST = "/card/list";
         export const DELETE = "/card/delete";
