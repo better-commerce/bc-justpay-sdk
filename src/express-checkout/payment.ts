@@ -90,6 +90,23 @@ export class Payment extends BaseEntity {
         });
     }
 
+    static walletPayment(params: any, requestOptions = undefined) {
+        if (params == undefined || params.length == 0) {
+            throw new InvalidRequestException();
+        }
+
+        params.format = "json";
+        return new Promise(async (resolve, reject) => {
+            try {
+                let response = await this.apiCall(`${Endpoints.Payment.TRANSACTIONS}#WalletPayment`, params, RequestMethod.POST, requestOptions, false);
+                response = Payment.updatePaymentResponseStructure(response);
+                resolve(new Payment(response));
+            } catch (error) {
+                reject(error);
+            }
+        });
+    }
+
     /**
      * Restructuring the payment response.
      * Removed unnecessary hierarchy in the response.
