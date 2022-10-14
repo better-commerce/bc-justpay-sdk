@@ -107,6 +107,23 @@ export class Payment extends BaseEntity {
         });
     }
 
+    static upiIntentPayment(params: any, requestOptions = undefined) {
+        if (params == undefined || params.length == 0) {
+            throw new InvalidRequestException();
+        }
+
+        params.format = "json";
+        return new Promise(async (resolve, reject) => {
+            try {
+                let response = await this.apiCall(`${Endpoints.Payment.TRANSACTIONS}#UPIPay`, params, RequestMethod.POST, requestOptions, false);
+                //response = Payment.updatePaymentResponseStructure(response);
+                resolve(response);
+            } catch (error) {
+                reject(error);
+            }
+        });
+    }
+
     /**
      * Restructuring the payment response.
      * Removed unnecessary hierarchy in the response.
