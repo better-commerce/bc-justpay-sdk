@@ -3,6 +3,7 @@
 //@ Description: Exports express checkout functionality.
 */
 
+import { Merchant } from "./merchant";
 import { Card } from "./card";
 import { Customer } from "./customer";
 import { CustomerList } from "./customer-list";
@@ -16,4 +17,4 @@ import { Wallet } from "./wallet";
 import { WalletList } from "./wallet-list";
 import { UPI } from "./upi";
 
-export { Card, Customer, CustomerList, Order, OrderList, Payment, Refund, Wallet, WalletList, UPI, PaymentLinks, PaymentMethod };
+export { Merchant, Card, Customer, CustomerList, Order, OrderList, Payment, Refund, Wallet, WalletList, UPI, PaymentLinks, PaymentMethod };
