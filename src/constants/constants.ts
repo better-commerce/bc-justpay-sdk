@@ -9,6 +9,10 @@ export module Endpoints {
         export const PRODUCTION_URL = "https://api.juspay.in";
     };
 
+    export module Merchant {
+        export const PAYMENT_METHODS = "/merchants/{merchantId}/paymentmethods";
+    };
+
     export module Card {
         export const TOKENIZE = "/card/tokenize";
         export const ADD = "/card/add";
