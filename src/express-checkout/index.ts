@@ -16,5 +16,6 @@ import { Refund } from "./refund";
 import { Wallet } from "./wallet";
 import { WalletList } from "./wallet-list";
 import { UPI } from "./upi";
+import { Offers } from "./offers";
 
-export { Merchant, Card, Customer, CustomerList, Order, OrderList, Payment, Refund, Wallet, WalletList, UPI, PaymentLinks, PaymentMethod };
+export { Merchant, Card, Customer, CustomerList, Order, OrderList, Payment, Refund, Wallet, WalletList, UPI, PaymentLinks, PaymentMethod, Offers, };

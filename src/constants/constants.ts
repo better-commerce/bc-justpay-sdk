@@ -13,6 +13,10 @@ export module Endpoints {
         export const PAYMENT_METHODS = "/merchants/{merchantId}/paymentmethods";
     };
 
+    export module Offers {
+        export const LIST = "/v1/offers/list";
+    };
+
     export module Card {
         export const TOKENIZE = "/card/tokenize";
         export const ADD = "/card/add";
