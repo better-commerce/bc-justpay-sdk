@@ -173,8 +173,9 @@ export class Order extends BaseEntity {
 
         return new Promise(async (resolve, reject) => {
             try {
-                let response = await this.apiCall(Endpoints.Order.UPDATE, params, RequestMethod.POST, requestOptions);
-                resolve(new Order(response));
+                const url = stringFormat(Endpoints.Order.UPDATE, { orderId: params?.orderId });
+                let response = await this.apiCall(url, { amount: params?.amount }, RequestMethod.POST, requestOptions);
+                resolve(response);
             } catch (error) {
                 reject(error);
             }

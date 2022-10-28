@@ -34,7 +34,7 @@ export module Endpoints {
         export const CREATE = "/order/create";
         export const GET = "/orders/{orderId}";
         export const STATUS = "/order/status";
-        export const UPDATE = "/order/update";
+        export const UPDATE = "/orders/{orderId}";
         export const LIST = "/order/list";
         export const REFUND = "/order/refund";
     };
