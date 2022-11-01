@@ -58,4 +58,4 @@ export module Endpoints {
     export module UPI {
         export const VERIFY_VPA = "/v2/upi/verify-vpa";
     }
-}
+};

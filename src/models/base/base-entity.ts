@@ -37,7 +37,7 @@ export class BaseEntity {
      * @throws AuthenticationException
      * @throws InvalidRequestException
      */
-    protected static apiCall(path: string, params: any, method: string, requestOptions: RequestOptions, isAuthRequired = true) {
+    protected static apiCall(path: string, params: any, method: string, requestOptions: RequestOptions, isAuthRequired = true, requestHeaders = null, stringifyPostData = true) {
         return new Promise((resolve, reject) => {
             if (requestOptions == undefined) {
                 requestOptions = RequestOptions.createDefault();
@@ -45,12 +45,15 @@ export class BaseEntity {
             let headers = {
                 'merchant-id': JuspayEnv.getMerchantId(),
                 'version': JuspayEnv.getApiVersion(),
-                'Content-Type': 'application/x-www-form-urlencoded',
+                'Content-Type': !requestHeaders ? 'application/x-www-form-urlencoded' : requestHeaders["Content-Type"],
             };
 
             if (isAuthRequired) {
                 const authorization = `Basic ${btoa(JuspayEnv.apiKey)}`;
-                headers = { ...headers, ...{ 'Authorization': authorization, }, };
+                headers = {
+                    ...headers,
+                    ...{ 'Authorization': authorization, },
+                };
             }
 
             let options: any = {
@@ -79,7 +82,11 @@ export class BaseEntity {
                 if (params == undefined) {
 
                 } else {
-                    options.data = querystring.stringify(params);
+                    if (stringifyPostData) {
+                        options.data = querystring.stringify(params);
+                    } else {
+                        options.data = params;
+                    }
                 }
             }
 
