@@ -37,7 +37,7 @@ export class BaseEntity {
      * @throws AuthenticationException
      * @throws InvalidRequestException
      */
-    protected static apiCall(path: string, params: any, method: string, requestOptions: RequestOptions, isAuthRequired = true) {
+    protected static apiCall(path: string, params: any, method: string, requestOptions: RequestOptions, isAuthRequired = true, requestHeaders: any = {}) {
         return new Promise((resolve, reject) => {
             if (requestOptions == undefined) {
                 requestOptions = RequestOptions.createDefault();
@@ -50,7 +50,11 @@ export class BaseEntity {
 
             if (isAuthRequired) {
                 const authorization = `Basic ${btoa(JuspayEnv.apiKey)}`;
-                headers = { ...headers, ...{ 'Authorization': authorization, }, };
+                headers = {
+                    ...headers,
+                    ...{ 'Authorization': authorization, },
+                    ...{ ...requestHeaders },
+                };
             }
 
             let options: any = {

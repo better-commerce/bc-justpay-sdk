@@ -34,7 +34,7 @@ export class Offers extends BaseEntity {
 
         return new Promise(async (resolve, reject) => {
             try {
-                let response = await this.apiCall(Endpoints.Offers.LIST, params, RequestMethod.POST, requestOptions);
+                let response = await this.apiCall(Endpoints.Offers.LIST, params, RequestMethod.POST, requestOptions, true, { "Content-Type": "application/json", });
                 resolve(response);
             } catch (error) {
                 reject(error);
