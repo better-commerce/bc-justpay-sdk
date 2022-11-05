@@ -115,7 +115,7 @@ export class Payment extends BaseEntity {
         params.format = "json";
         return new Promise(async (resolve, reject) => {
             try {
-                let response: any = await this.apiCall(`${Endpoints.Payment.TRANSACTIONS}#UPIPay`, params, RequestMethod.POST, requestOptions, false);
+                let response: any = await this.apiCall(`${Endpoints.Payment.TRANSACTIONS}#MwebIntent`, params, RequestMethod.POST, requestOptions, false);
                 //response = Payment.updatePaymentResponseStructure(response);
                 if (response?.payment?.sdk_params) {
                     const sdk_params = response?.payment?.sdk_params;
