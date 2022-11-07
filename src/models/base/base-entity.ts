@@ -92,6 +92,7 @@ export class BaseEntity {
 
             api(options)
                 .then((response) => {
+                    //console.log(response)
                     let responseCode = response.status;
                     let responseBody = response.data;
                     if (responseCode >= 200 && responseCode < 300) {

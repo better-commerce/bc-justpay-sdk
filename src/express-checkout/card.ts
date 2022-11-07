@@ -5,6 +5,7 @@ import { InvalidRequestException } from "../models/exceptions/request/invalid-re
 import { Endpoints } from "../constants/constants";
 import { RequestMethod } from "../constants/enums";
 import { BaseEntity } from "../models/base/base-entity";
+import { stringFormat } from "../utils/format-util";
 
 /**
  * Class Card
@@ -90,18 +91,15 @@ export class Card extends BaseEntity {
             throw new InvalidRequestException();
         }
 
-        let response: any = this.apiCall(Endpoints.Card.LIST, params, RequestMethod.GET, requestOptions);
-        let cardArray = Array();
-
-        if ("cards" in response) {
-            cardArray = response.cards;
-
-            /*for (let i = 0; i < cardArray.length; i++) {
-                cardArray[i] = new Card(cardArray[i]);
-            }*/
-        }
-
-        return cardArray;
+        return new Promise(async (resolve, reject) => {
+            try {
+                const url = stringFormat(Endpoints.Card.LIST, { customerId: params?.customer_id });
+                let response = this.apiCall(url, {}, RequestMethod.GET, requestOptions);
+                resolve(response);
+            } catch (error) {
+                reject(error);
+            }
+        });
     }
 
     /**
