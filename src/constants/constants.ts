@@ -59,3 +59,36 @@ export module Endpoints {
         export const VERIFY_VPA = "/v2/upi/verify-vpa";
     }
 };
+
+export const DEFAULT_UPI_URL_PREFIX = "upi://";
+export const URL_FORMAT = "{upiUrlPrefix}pay?tr={tr}&tid={tid}&pa={pa}&mc={mcc}&pn={pn}&am={am}&cu={cu}&tn={tn}";
+export const UPI_INTENT_LINKS = [
+    {
+        key: "AMAZONPAY",
+        prefixUrl: "amzn://",
+    },
+    {
+        key: "PAYTM",
+        prefixUrl: "paytmmp://",
+    },
+    {
+        key: "PHONEPE",
+        prefixUrl: "phonepe://",
+    },
+    {
+        key: "MOBIKWIK",
+        prefixUrl: "",
+    },
+    {
+        key: "FREECHARGE",
+        prefixUrl: "",
+    },
+    {
+        key: "GOOGLEPAY",
+        prefixUrl: "tez://upi/",
+    },
+    {
+        key: "BHIM",
+        prefixUrl: "BHIM://",
+    },
+];
