@@ -119,8 +119,16 @@ export class Card extends BaseEntity {
             throw new InvalidRequestException();
         }
 
-        let response: any = this.apiCall(Endpoints.Card.DELETE, params, RequestMethod.POST, requestOptions);
-        return response.deleted;
+        return new Promise(async (resolve, reject) => {
+            try {
+                let response: any = await this.apiCall(Endpoints.Card.DELETE, params, RequestMethod.POST, requestOptions, true, {
+                    'Content-Type': 'application/json',
+                }, false);
+                resolve(response?.deleted);
+            } catch (error) {
+                reject(error);
+            }
+        });
     }
 
     static binInfo(params: string, requestOptions = undefined) {
