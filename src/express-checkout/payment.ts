@@ -120,7 +120,6 @@ export class Payment extends BaseEntity {
                 if (response?.payment?.sdk_params) {
                     const sdk_params = response?.payment?.sdk_params;
 
-                    //const urlFormat = "upi://pay?tr={tr}&tid={tid}&pa={pa}&mc={mcc}&pn={pn}&am={am}&cu={cu}&tn={tn}";
                     const upiIntentUrl = stringFormat(URL_FORMAT, {
                         upiUrlPrefix: DEFAULT_UPI_URL_PREFIX,
                         tr: sdk_params?.tr,
