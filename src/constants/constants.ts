@@ -20,7 +20,7 @@ export module Endpoints {
     export module Card {
         export const TOKENIZE = "/card/tokenize";
         export const ADD = "/card/add";
-        export const LIST = "/card/list";
+        export const LIST = "/cards?customer_id={customerId}"; //"/card/list";
         export const DELETE = "/card/delete";
         export const BIN_INFO = "/cardbins";
     };
@@ -59,3 +59,37 @@ export module Endpoints {
         export const VERIFY_VPA = "/v2/upi/verify-vpa";
     }
 };
+
+export const DEFAULT_UPI_URL_PREFIX = "upi://";
+export const URL_FORMAT = "{upiUrlPrefix}pay?tr={tr}&pa={pa}&mc={mcc}&pn={pn}&am={am}&cu={cu}&tn={tn}";
+export const URL_FORMAT_EXCLUDE_TXN_NO = "{upiUrlPrefix}pay?tr={tr}&pa={pa}&mc={mcc}&pn={pn}&am={am}&cu={cu}";
+export const UPI_INTENT_LINKS = [
+    {
+        key: "AMAZONPAY",
+        prefixUrl: "amzn://",
+    },
+    {
+        key: "PAYTM",
+        prefixUrl: "paytmmp://",
+    },
+    {
+        key: "PHONEPE",
+        prefixUrl: "phonepe://",
+    },
+    {
+        key: "MOBIKWIK",
+        prefixUrl: "",
+    },
+    {
+        key: "FREECHARGE",
+        prefixUrl: "",
+    },
+    {
+        key: "GOOGLEPAY",
+        prefixUrl: "tez://upi/",
+    },
+    {
+        key: "BHIM",
+        prefixUrl: "BHIM://",
+    },
+];

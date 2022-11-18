@@ -2,7 +2,7 @@
 import { InvalidRequestException } from "../models/exceptions/request/invalid-request-exception";
 
 // Other Imports
-import { Endpoints } from "../constants/constants";
+import { DEFAULT_UPI_URL_PREFIX, Endpoints, UPI_INTENT_LINKS, URL_FORMAT, URL_FORMAT_EXCLUDE_TXN_NO } from "../constants/constants";
 import { RequestMethod } from "../constants/enums";
 import { BaseEntity } from "../models/base/base-entity";
 import { stringFormat } from "../utils/format-util";
@@ -119,18 +119,47 @@ export class Payment extends BaseEntity {
                 //response = Payment.updatePaymentResponseStructure(response);
                 if (response?.payment?.sdk_params) {
                     const sdk_params = response?.payment?.sdk_params;
-                    const urlFormat = "upi://pay?tr={tr}&tid={tid}&pa={pa}&mc={mcc}&pn={pn}&am={am}&cu={cu}&tn={tn}";
-                    const upiIntentUrl = stringFormat(urlFormat, {
+
+                    const intentParams: any = {
+                        upiUrlPrefix: DEFAULT_UPI_URL_PREFIX,
                         tr: sdk_params?.tr,
                         tid: response?.txn_id,
                         pa: sdk_params?.merchant_vpa,
                         mcc: sdk_params?.mcc,
                         pn: sdk_params?.merchant_name,
-                        am: sdk_params?.mam,
-                        cu: sdk_params?.currency,
-                        tn: sdk_params?.tn
-                    })
-                    response = { ...response, ...{ upiIntentUrl: upiIntentUrl } };
+                        am: sdk_params?.mam ?? sdk_params?.amount,
+                        cu: sdk_params?.currency ?? params?.defaultCurrency,
+                    };
+                    if (sdk_params?.tn) {
+                        intentParams["tn"] = sdk_params?.tn;
+                    }
+                    const upiIntentUrl = intentParams?.tn
+                        ? stringFormat(URL_FORMAT, intentParams)
+                        : stringFormat(URL_FORMAT_EXCLUDE_TXN_NO, intentParams);
+
+                    const upiIntentUrls = UPI_INTENT_LINKS?.map((link: any) => {
+                        const intentParams: any = {
+                            upiUrlPrefix: !link?.prefixUrl ? DEFAULT_UPI_URL_PREFIX : link?.prefixUrl,
+                            tr: sdk_params?.tr,
+                            tid: response?.txn_id,
+                            pa: sdk_params?.merchant_vpa,
+                            mcc: sdk_params?.mcc,
+                            pn: sdk_params?.merchant_name,
+                            am: sdk_params?.mam ?? sdk_params?.amount,
+                            cu: sdk_params?.currency ?? params?.defaultCurrency,
+                        };
+                        if (sdk_params?.tn) {
+                            intentParams["tn"] = sdk_params?.tn;
+                        }
+                        return {
+                            key: link?.key,
+                            url: intentParams?.tn
+                                ? stringFormat(URL_FORMAT, intentParams)
+                                : stringFormat(URL_FORMAT_EXCLUDE_TXN_NO, intentParams)
+                        };
+                    });
+
+                    response = { ...response, ...{ upiIntentUrl: upiIntentUrl, upiIntentUrls: upiIntentUrls } };
                 }
                 resolve(response);
             } catch (error) {
