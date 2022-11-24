@@ -52,7 +52,7 @@ export class Payment extends BaseEntity {
         params.format = "json";
         return new Promise(async (resolve, reject) => {
             try {
-                let response = await this.apiCall(`${Endpoints.Payment.TRANSACTIONS}#CardTransaction`, params, RequestMethod.POST, requestOptions, false);
+                let response = await this.apiCall(`${Endpoints.Payment.TRANSACTIONS}#CardTransaction`, params, RequestMethod.POST, requestOptions, false, { "Content-Type": "application/json" }, false);
                 response = Payment.updatePaymentResponseStructure(response);
                 resolve(new Payment(response));
             } catch (error) {
@@ -81,7 +81,7 @@ export class Payment extends BaseEntity {
         params.format = "json";
         return new Promise(async (resolve, reject) => {
             try {
-                let response = await this.apiCall(`${Endpoints.Payment.TRANSACTIONS}#netbanking`, params, RequestMethod.POST, requestOptions, false);
+                let response = await this.apiCall(`${Endpoints.Payment.TRANSACTIONS}#netbanking`, params, RequestMethod.POST, requestOptions, false, { "Content-Type": "application/json" }, false);
                 response = Payment.updatePaymentResponseStructure(response);
                 resolve(new Payment(response));
             } catch (error) {
@@ -98,7 +98,7 @@ export class Payment extends BaseEntity {
         params.format = "json";
         return new Promise(async (resolve, reject) => {
             try {
-                let response = await this.apiCall(`${Endpoints.Payment.TRANSACTIONS}#WalletPayment`, params, RequestMethod.POST, requestOptions, false);
+                let response = await this.apiCall(`${Endpoints.Payment.TRANSACTIONS}#WalletPayment`, params, RequestMethod.POST, requestOptions, false, { "Content-Type": "application/json" }, false);
                 response = Payment.updatePaymentResponseStructure(response);
                 resolve(new Payment(response));
             } catch (error) {
@@ -115,7 +115,7 @@ export class Payment extends BaseEntity {
         params.format = "json";
         return new Promise(async (resolve, reject) => {
             try {
-                let response: any = await this.apiCall(`${Endpoints.Payment.TRANSACTIONS}#MwebIntent`, params, RequestMethod.POST, requestOptions, false);
+                let response: any = await this.apiCall(`${Endpoints.Payment.TRANSACTIONS}#MwebIntent`, params, RequestMethod.POST, requestOptions, false, { "Content-Type": "application/json" }, false);
                 //response = Payment.updatePaymentResponseStructure(response);
                 if (response?.payment?.sdk_params) {
                     const sdk_params = response?.payment?.sdk_params;
