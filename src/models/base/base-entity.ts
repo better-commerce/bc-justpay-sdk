@@ -90,6 +90,7 @@ export class BaseEntity {
                 }
             }
 
+            //console.log(options);
             api(options)
                 .then((response) => {
                     //console.log(response)
