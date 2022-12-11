@@ -121,10 +121,8 @@ export class Card extends BaseEntity {
 
         return new Promise(async (resolve, reject) => {
             try {
-                let response: any = await this.apiCall(Endpoints.Card.DELETE, params, RequestMethod.POST, requestOptions, true, {
-                    'Content-Type': 'application/json',
-                }, false);
-                resolve(response);
+                let response: any = await this.apiCall(Endpoints.Card.DELETE, params, RequestMethod.POST, requestOptions);
+                resolve(response?.deleted);
             } catch (error) {
                 reject(error);
             }
