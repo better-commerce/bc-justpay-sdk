@@ -41,7 +41,6 @@ export class BaseEntity {
     protected static apiCall(source = "", path: string, params: any, method: string, requestOptions: RequestOptions, isAuthRequired = true, requestHeaders = null, stringifyPostData = true) {
 
         const logId = "BCJuspaySDK";
-        const timestamp = new Date().toISOString();
         return new Promise((resolve, reject) => {
             if (requestOptions == undefined) {
                 requestOptions = RequestOptions.createDefault();
@@ -97,13 +96,15 @@ export class BaseEntity {
             if (SDK_LOGGING_ENABLED && source) {
                 this.logApiCall({
                     data: {
-                        url: path,
-                        method: method,
-                        baseURL: JuspayEnv.getBaseUrl(),
-                        params: params || {},
-                        headers: headers,
+                        request: {
+                            url: path,
+                            method: method,
+                            baseURL: JuspayEnv.getBaseUrl(),
+                            params: params || {},
+                            headers: headers,
+                        }
                     },
-                }, `${logId} | ${source} Request | ${timestamp}`);
+                }, `${logId} | ${source} Request`);
             }
 
             //console.log(options);
@@ -113,8 +114,10 @@ export class BaseEntity {
 
                     if (SDK_LOGGING_ENABLED && source) {
                         this.logApiCall({
-                            data: response?.data,
-                        }, `${logId} | ${source} Response | ${timestamp}`);
+                            data: {
+                                response: response?.data
+                            },
+                        }, `${logId} | ${source} Response`);
                     }
 
                     let responseCode = response.status;
@@ -179,8 +182,10 @@ export class BaseEntity {
 
                     if (SDK_LOGGING_ENABLED && source) {
                         this.logApiCall({
-                            data: errorData,
-                        }, `${logId} | ${source} Error | ${timestamp}`);
+                            data: {
+                                error: errorData
+                            },
+                        }, `${logId} | ${source} Error`);
                     }
 
                     reject(error);
@@ -215,7 +220,7 @@ export class BaseEntity {
     }
 
     private static logApiCall = async ({ data = {}, }: any, message: string) => {
-
+        const timestamp = new Date().toISOString();
         return new Promise((resolve, reject) => {
 
             let options: any = {
@@ -227,7 +232,7 @@ export class BaseEntity {
                     orgCode: JuspayEnv.getOrgCode(),
                     domainId: JuspayEnv.getDomainId(),
                     requestData: JSON.stringify(data),
-                    shortMessage: message
+                    shortMessage: `${message} | ${timestamp}`,
                 },
             };
 
