@@ -2,7 +2,7 @@
 import { InvalidRequestException } from "../models/exceptions/request/invalid-request-exception";
 
 // Other Imports
-import { Endpoints } from "../constants/constants";
+import { Endpoints, PaymentSource } from "../constants/constants";
 import { RequestMethod } from "../constants/enums";
 import { BaseEntity } from "../models/base/base-entity";
 import { consoleLog } from "../utils/log-util";
@@ -34,7 +34,7 @@ export class Offers extends BaseEntity {
 
         return new Promise(async (resolve, reject) => {
             try {
-                let response = await this.apiCall(Endpoints.Offers.LIST, params, RequestMethod.POST, requestOptions, true, {
+                let response = await this.apiCall(PaymentSource.LIST_ALL_OFFERS, Endpoints.Offers.LIST, params, RequestMethod.POST, requestOptions, true, {
                     'Content-Type': 'application/json',
                 }, false);
                 resolve(response);

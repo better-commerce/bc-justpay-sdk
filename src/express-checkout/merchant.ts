@@ -3,7 +3,7 @@ import { InvalidRequestException } from "../models/exceptions/request/invalid-re
 
 // Other Imports
 import { JuspayEnv } from "../models";
-import { Endpoints } from "../constants/constants";
+import { Endpoints, PaymentSource } from "../constants/constants";
 import { RequestMethod } from "../constants/enums";
 import { BaseEntity } from "../models/base/base-entity";
 import { consoleLog } from "../utils/log-util";
@@ -37,7 +37,7 @@ export class Merchant extends BaseEntity {
         return new Promise(async (resolve, reject) => {
             try {
                 const url = stringFormat(Endpoints.Merchant.PAYMENT_METHODS, { merchantId: JuspayEnv.getMerchantId() });
-                let response = await this.apiCall(url, params, RequestMethod.GET, requestOptions);
+                let response = await this.apiCall(PaymentSource.GET_PAYMENT_METHODS, url, params, RequestMethod.GET, requestOptions);
                 resolve(response);
             } catch (error) {
                 reject(error);

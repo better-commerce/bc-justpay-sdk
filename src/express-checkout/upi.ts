@@ -3,7 +3,7 @@ import { InvalidRequestException } from "../models";
 
 // Other Imports
 import { BaseEntity } from "../models/base/base-entity";
-import { Endpoints } from "../constants/constants";
+import { Endpoints, PaymentSource } from "../constants/constants";
 import { RequestMethod } from "../constants/enums";
 
 export class UPI extends BaseEntity {
@@ -26,7 +26,7 @@ export class UPI extends BaseEntity {
             throw new InvalidRequestException();
         }
 
-        let response = this.apiCall(Endpoints.UPI.VERIFY_VPA, params, RequestMethod.POST, requestOptions);
+        let response = this.apiCall(PaymentSource.VERIFY_VPA, Endpoints.UPI.VERIFY_VPA, params, RequestMethod.POST, requestOptions);
         return response;
     }
 
@@ -36,7 +36,7 @@ export class UPI extends BaseEntity {
         }
 
         const url = `${Endpoints.Payment.TRANSACTIONS}`;
-        let response = this.apiCall(url, params, RequestMethod.POST, requestOptions);
+        let response = this.apiCall(PaymentSource.COLLECT_UPI_PAYMENT, url, params, RequestMethod.POST, requestOptions);
         return response;
     }
 }
