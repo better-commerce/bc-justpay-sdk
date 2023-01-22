@@ -2,7 +2,7 @@
 import { InvalidRequestException } from "../models/exceptions/request/invalid-request-exception";
 
 // Other Imports
-import { Endpoints } from "../constants/constants";
+import { Endpoints, PaymentSource } from "../constants/constants";
 import { RequestMethod } from "../constants/enums";
 import { BaseEntity } from "../models/base/base-entity";
 import { Card } from "./card";
@@ -104,7 +104,7 @@ export class Order extends BaseEntity {
 
         return new Promise(async (resolve, reject) => {
             try {
-                let response: any = await this.apiCall(Endpoints.Order.CREATE, params, RequestMethod.POST, requestOptions);
+                let response: any = await this.apiCall(PaymentSource.GET_ORDER, Endpoints.Order.CREATE, params, RequestMethod.POST, requestOptions);
                 response = Order.addInputParamsToResponse(params, response);
                 response = Order.updateOrderResponseStructure(response);
                 resolve(new Order(response));
@@ -118,7 +118,7 @@ export class Order extends BaseEntity {
         return new Promise(async (resolve, reject) => {
             try {
                 const url = stringFormat(Endpoints.Order.GET, { orderId: params });
-                let response = this.apiCall(url, undefined, RequestMethod.GET, requestOptions);
+                let response = this.apiCall(PaymentSource.GET_ORDER, url, undefined, RequestMethod.GET, requestOptions);
                 resolve(response);
             } catch (error) {
                 reject(error);
@@ -145,7 +145,7 @@ export class Order extends BaseEntity {
 
         return new Promise(async (resolve, reject) => {
             try {
-                let response: any = await this.apiCall(Endpoints.Order.STATUS, params, RequestMethod.POST, requestOptions);
+                let response: any = await this.apiCall(PaymentSource.GET_ORDER_STATUS, Endpoints.Order.STATUS, params, RequestMethod.POST, requestOptions);
                 response = Order.updateOrderResponseStructure(response);
                 resolve(new Order(response));
             } catch (error) {
@@ -174,7 +174,7 @@ export class Order extends BaseEntity {
         return new Promise(async (resolve, reject) => {
             try {
                 //const url = stringFormat(Endpoints.Order.UPDATE, { orderId: params?.orderId });
-                let response = await this.apiCall(Endpoints.Order.UPDATE, {
+                let response = await this.apiCall(PaymentSource.UPDATE_ORDER, Endpoints.Order.UPDATE, {
                     order_id: params?.orderId,
                     amount: params?.amount
                 }, RequestMethod.POST, requestOptions);
@@ -200,7 +200,7 @@ export class Order extends BaseEntity {
     static listAll(params: any, requestOptions = undefined) {
         return new Promise(async (resolve, reject) => {
             try {
-                let response = await this.apiCall(Endpoints.Order.LIST, params, RequestMethod.GET, requestOptions);
+                let response = await this.apiCall(PaymentSource.LIST_ALL_ORDERS, Endpoints.Order.LIST, params, RequestMethod.GET, requestOptions);
                 resolve(new OrderList(response));
             } catch (error) {
                 reject(error);
@@ -227,7 +227,7 @@ export class Order extends BaseEntity {
 
         return new Promise(async (resolve, reject) => {
             try {
-                let response: any = await this.apiCall(Endpoints.Order.REFUND, params, RequestMethod.POST, requestOptions);
+                let response: any = await this.apiCall(PaymentSource.REFUND_ORDER, Endpoints.Order.REFUND, params, RequestMethod.POST, requestOptions);
                 response = Order.updateOrderResponseStructure(response);
                 resolve(new Order(response));
             } catch (error) {

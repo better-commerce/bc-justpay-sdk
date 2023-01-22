@@ -2,7 +2,7 @@
 import { InvalidRequestException } from "../models/exceptions/request/invalid-request-exception";
 
 // Other Imports
-import { Endpoints } from "../constants/constants";
+import { Endpoints, PaymentSource } from "../constants/constants";
 import { RequestMethod } from "../constants/enums";
 import { BaseEntity } from "../models/base/base-entity";
 import { stringFormat } from "../utils/format-util";
@@ -62,7 +62,7 @@ export class Customer extends BaseEntity {
 
         return new Promise(async (resolve, reject) => {
             try {
-                let response = await this.apiCall(Endpoints.Customer.CREATE_OR_LIST, params, RequestMethod.POST, requestOptions);
+                let response = await this.apiCall(PaymentSource.CREATE_CUSTOMER, Endpoints.Customer.CREATE_OR_LIST, params, RequestMethod.POST, requestOptions);
                 resolve(response);
             } catch (error) {
                 reject(error);
@@ -92,7 +92,7 @@ export class Customer extends BaseEntity {
         return new Promise(async (resolve, reject) => {
             try {
                 const url = stringFormat(Endpoints.Customer.GET_OR_UPDATE, { id: id });
-                let response = await this.apiCall(url, params, RequestMethod.POST, requestOptions);
+                let response = await this.apiCall(PaymentSource.UPDATE_CUSTOMER, url, params, RequestMethod.POST, requestOptions);
                 resolve(response);
             } catch (error) {
                 reject(error);
@@ -115,7 +115,7 @@ export class Customer extends BaseEntity {
     static listAll(params: any, requestOptions = undefined) {
         return new Promise(async (resolve, reject) => {
             try {
-                let response = await this.apiCall(Endpoints.Customer.CREATE_OR_LIST, params, RequestMethod.GET, requestOptions);
+                let response = await this.apiCall(PaymentSource.LIST_ALL_CUSTOMERS, Endpoints.Customer.CREATE_OR_LIST, params, RequestMethod.GET, requestOptions);
                 resolve(response);
             } catch (error) {
                 reject(error);
@@ -143,7 +143,7 @@ export class Customer extends BaseEntity {
         return new Promise(async (resolve, reject) => {
             try {
                 const url = stringFormat(Endpoints.Customer.GET_OR_UPDATE, { id: id });
-                let response = await this.apiCall(url, undefined, RequestMethod.GET, requestOptions);
+                let response = await this.apiCall(PaymentSource.GET_CUSTOMER, url, undefined, RequestMethod.GET, requestOptions);
                 resolve(response);
             } catch (error) {
                 reject(error);

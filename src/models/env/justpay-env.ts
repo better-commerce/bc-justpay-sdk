@@ -54,6 +54,12 @@ export class JuspayEnv {
 
   /**
    *
+   * @property string
+   */
+  static extras: any;
+
+  /**
+   *
    * @property JuspayEnv
    */
   static thisObj: any;
@@ -79,6 +85,7 @@ export class JuspayEnv {
       JuspayEnv.connectTimeout = 15;
       JuspayEnv.readTimeout = 30;
       JuspayEnv.sdkVersion = "1.0.0";
+      JuspayEnv.extras = null;
       JuspayEnv.thisObj = new JuspayEnv();
       return JuspayEnv.thisObj;
     }
@@ -95,7 +102,7 @@ export class JuspayEnv {
    *
    * @return JuspayEnv
    */
-  static withCredentials(merchantId: string, apiKey: string, baseUrl?: string, connectTimeout?: number, readTimeout?: number) {
+  static withCredentials(merchantId: string, apiKey: string, baseUrl?: string, connectTimeout?: number, readTimeout?: number, extras?: any) {
     JuspayEnv.merchantId = merchantId;
     JuspayEnv.apiKey = apiKey;
 
@@ -109,6 +116,10 @@ export class JuspayEnv {
 
     if (readTimeout) {
       JuspayEnv.readTimeout = readTimeout;
+    }
+
+    if (extras) {
+      JuspayEnv.extras = extras;
     }
     return this;
   }
@@ -169,4 +180,47 @@ export class JuspayEnv {
     return JuspayEnv.sdkVersion;
   }
 
+  /**
+  *
+  * @return string
+  */
+  static getLoggingBaseUrl() {
+    if (JuspayEnv?.extras) {
+      return JuspayEnv?.extras?.loggingBaseUrl;
+    }
+    return "";
+  }
+
+  /**
+  *
+  * @return string
+  */
+  static getOrgCode() {
+    if (JuspayEnv?.extras) {
+      return JuspayEnv?.extras?.orgCode;
+    }
+    return "";
+  }
+
+  /**
+  *
+  * @return string
+  */
+  static getOrgId() {
+    if (JuspayEnv?.extras) {
+      return JuspayEnv?.extras?.orgId;
+    }
+    return "";
+  }
+
+  /**
+  *
+  * @return string
+  */
+  static getDomainId() {
+    if (JuspayEnv?.extras) {
+      return JuspayEnv?.extras?.domainId;
+    }
+    return "";
+  }
 };
