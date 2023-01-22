@@ -159,7 +159,12 @@ export class BaseEntity {
                 .catch((error) => {
                     let errorData = {};
                     if (error.response) {
-                        errorData = error.response;
+                        //errorData = error.response;
+                        errorData = {
+                            headers: error.response.headers,
+                            status: error.response.status,
+                            data: error.response.data,
+                        };
 
                         // The request was made and the server responded with a status code
                         // that falls out of the range of 2xx
@@ -188,8 +193,10 @@ export class BaseEntity {
                         }, `${logId} | ${source} Error`);
                     }
 
-                    reject(error);
+                    reject(errorData);
                 });
+        }).catch((err: any) => {
+            //console.log(err);
         });
     }
 
