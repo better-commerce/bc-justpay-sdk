@@ -8,10 +8,7 @@ JuspayEnv.withCredentials("damensch", "713ED52588D405C8D1A75E97424CA6:", "https:
     orgId: "9C549322-7E67-43EE-9C83-F6F4AD486694",
     domainId: "DDACCA23-E299-4345-A0FC-36DA0969A7AF",
 });
-ExpressCheckout.Order.get({ order_id: "15727-453726" })
-    .then(orderStatusResult => {
-        console.log(orderStatusResult);
-    })
-    .catch(error => {
-        console.log(error);
+ExpressCheckout.Merchant.paymentMethods({ ["options.add_outage"]: true })
+    .then(paymentMethodsResult => {
+        console.log(paymentMethodsResult);
     });

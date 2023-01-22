@@ -2,7 +2,7 @@
 import { InvalidRequestException } from "../models/exceptions/request/invalid-request-exception";
 
 // Other Imports
-import { DEFAULT_UPI_URL_PREFIX, Endpoints, UPI_INTENT_LINKS, URL_FORMAT, URL_FORMAT_EXCLUDE_TXN_NO } from "../constants/constants";
+import { DEFAULT_UPI_URL_PREFIX, Endpoints, PaymentSource, UPI_INTENT_LINKS, URL_FORMAT, URL_FORMAT_EXCLUDE_TXN_NO } from "../constants/constants";
 import { RequestMethod } from "../constants/enums";
 import { BaseEntity } from "../models/base/base-entity";
 import { stringFormat } from "../utils/format-util";
@@ -52,7 +52,7 @@ export class Payment extends BaseEntity {
         params.format = "json";
         return new Promise(async (resolve, reject) => {
             try {
-                let response = await this.apiCall(`${Endpoints.Payment.TRANSACTIONS}#CardTransaction`, params, RequestMethod.POST, requestOptions);
+                let response = await this.apiCall(PaymentSource.CREDIT_DEBIT_CARD_PAYMENT, `${Endpoints.Payment.TRANSACTIONS}#CardTransaction`, params, RequestMethod.POST, requestOptions);
                 response = Payment.updatePaymentResponseStructure(response);
                 resolve(new Payment(response));
             } catch (error) {
@@ -81,7 +81,7 @@ export class Payment extends BaseEntity {
         params.format = "json";
         return new Promise(async (resolve, reject) => {
             try {
-                let response = await this.apiCall(`${Endpoints.Payment.TRANSACTIONS}#netbanking`, params, RequestMethod.POST, requestOptions);
+                let response = await this.apiCall(PaymentSource.NETBANKING_PAYMENT, `${Endpoints.Payment.TRANSACTIONS}#netbanking`, params, RequestMethod.POST, requestOptions);
                 response = Payment.updatePaymentResponseStructure(response);
                 resolve(new Payment(response));
             } catch (error) {
@@ -98,7 +98,7 @@ export class Payment extends BaseEntity {
         params.format = "json";
         return new Promise(async (resolve, reject) => {
             try {
-                let response = await this.apiCall(`${Endpoints.Payment.TRANSACTIONS}#WalletPayment`, params, RequestMethod.POST, requestOptions);
+                let response = await this.apiCall(PaymentSource.WALLET_PAYMENT, `${Endpoints.Payment.TRANSACTIONS}#WalletPayment`, params, RequestMethod.POST, requestOptions);
                 response = Payment.updatePaymentResponseStructure(response);
                 resolve(new Payment(response));
             } catch (error) {
@@ -115,7 +115,7 @@ export class Payment extends BaseEntity {
         params.format = "json";
         return new Promise(async (resolve, reject) => {
             try {
-                let response: any = await this.apiCall(`${Endpoints.Payment.TRANSACTIONS}#MwebIntent`, params, RequestMethod.POST, requestOptions);
+                let response: any = await this.apiCall(PaymentSource.UPI_INTENT_PAYMENT, `${Endpoints.Payment.TRANSACTIONS}#MwebIntent`, params, RequestMethod.POST, requestOptions);
                 //response = Payment.updatePaymentResponseStructure(response);
                 if (response?.payment?.sdk_params) {
                     const sdk_params = response?.payment?.sdk_params;

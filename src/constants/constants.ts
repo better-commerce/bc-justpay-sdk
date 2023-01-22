@@ -8,6 +8,7 @@ export module Endpoints {
         export const SANDBOX_URL = "https://sandbox.juspay.in";
         export const PRODUCTION_URL = "https://api.juspay.in";
     };
+    export const LOG_API_CALL = "/Log/payment";
 
     export module Merchant {
         export const PAYMENT_METHODS = "/merchants/{merchantId}/paymentmethods";
@@ -93,3 +94,38 @@ export const UPI_INTENT_LINKS = [
         prefixUrl: "BHIM://",
     },
 ];
+
+export const SDK_LOGGING_ENABLED = true;
+export enum PaymentSource {
+    TOKENIZE_CARD = "TokenizeCard",
+    ADD_CARD = "AddCard",
+    LIST_ALL_CARDS = "ListAllCards",
+    DELETE_CARD = "DeleteCard",
+    GET_CARD_INFO = "GetCardInfo",
+    CREATE_CUSTOMER = "CreateCustomer",
+    UPDATE_CUSTOMER = "UpdateCustomer",
+    LIST_ALL_CUSTOMERS = "ListAllCustomers",
+    GET_CUSTOMER = "GetCustomer",
+    GET_PAYMENT_METHODS = "GetPaymentMethods",
+    LIST_ALL_OFFERS = "ListAllOffers",
+    CREATE_ORDER = "CreateOrder",
+    GET_ORDER = "GetOrder",
+    GET_ORDER_STATUS = "GetOrderStatus",
+    UPDATE_ORDER = "UpdateOrder",
+    LIST_ALL_ORDERS = "ListAllOrders",
+    REFUND_ORDER = "RefundOrder",
+    CREDIT_DEBIT_CARD_PAYMENT = "CreditDebitCardPayment",
+    NETBANKING_PAYMENT = "NetbankingPayment",
+    WALLET_PAYMENT = "WalletPayment",
+    UPI_INTENT_PAYMENT = "UPIIntentPayment",
+    VERIFY_VPA = "VerifyVPA",
+    COLLECT_UPI_PAYMENT = "CollectUPIPayment",
+    LIST_ALL_WALLETS = "ListAllWallets",
+    REFRESH_WALLET_BALANCE = "RefreshWalletBalance",
+    CREATE_WALLET = "CreateWallet",
+    CREATE_AND_AUTHENTICATE_WALLET = "CreateAndAuthenticateWallet",
+    REFRESH_BY_WALLET_ID = "RefreshByWalletId",
+    AUTHENTICATE_WALLET = "AuthenticateWallet",
+    LINK_WALLET = "LinkWallet",
+    DELINK_WALLET = "DelinkWallet",
+};

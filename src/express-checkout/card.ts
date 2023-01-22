@@ -2,7 +2,7 @@
 import { InvalidRequestException } from "../models/exceptions/request/invalid-request-exception";
 
 // Other Imports
-import { Endpoints } from "../constants/constants";
+import { Endpoints, PaymentSource } from "../constants/constants";
 import { RequestMethod } from "../constants/enums";
 import { BaseEntity } from "../models/base/base-entity";
 import { stringFormat } from "../utils/format-util";
@@ -48,7 +48,7 @@ export class Card extends BaseEntity {
             throw new InvalidRequestException();
         }
 
-        let response = this.apiCall(Endpoints.Card.TOKENIZE, params, RequestMethod.POST, requestOptions);
+        let response = this.apiCall(PaymentSource.TOKENIZE_CARD, Endpoints.Card.TOKENIZE, params, RequestMethod.POST, requestOptions);
         return response;
     }
 
@@ -69,7 +69,7 @@ export class Card extends BaseEntity {
             throw new InvalidRequestException();
         }
 
-        let response = this.apiCall(Endpoints.Card.ADD, params, RequestMethod.POST, requestOptions);
+        let response = this.apiCall(PaymentSource.ADD_CARD, Endpoints.Card.ADD, params, RequestMethod.POST, requestOptions);
         //return new Card(response);
         return response;
     }
@@ -94,7 +94,7 @@ export class Card extends BaseEntity {
         return new Promise(async (resolve, reject) => {
             try {
                 const url = stringFormat(Endpoints.Card.LIST, { customerId: params?.customer_id });
-                let response = this.apiCall(url, {}, RequestMethod.GET, requestOptions);
+                let response = this.apiCall(PaymentSource.LIST_ALL_CARDS, url, {}, RequestMethod.GET, requestOptions);
                 resolve(response);
             } catch (error) {
                 reject(error);
@@ -121,9 +121,7 @@ export class Card extends BaseEntity {
 
         return new Promise(async (resolve, reject) => {
             try {
-                let response: any = await this.apiCall(Endpoints.Card.DELETE, params, RequestMethod.POST, requestOptions, true, {
-                    'Content-Type': 'application/json',
-                }, false);
+                let response: any = await this.apiCall(PaymentSource.DELETE_CARD, Endpoints.Card.DELETE, params, RequestMethod.POST, requestOptions);
                 resolve(response?.deleted);
             } catch (error) {
                 reject(error);
@@ -136,7 +134,7 @@ export class Card extends BaseEntity {
             throw new InvalidRequestException();
         }
 
-        let response: any = this.apiCall(`${Endpoints.Card.BIN_INFO}/${params}`, undefined, RequestMethod.GET, requestOptions);
+        let response: any = this.apiCall(PaymentSource.GET_CARD_INFO, `${Endpoints.Card.BIN_INFO}/${params}`, undefined, RequestMethod.GET, requestOptions);
         return response;
     }
 

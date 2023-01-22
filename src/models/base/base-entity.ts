@@ -16,6 +16,7 @@ import { APIException } from "../exceptions/api/api-exception";
 import { AuthenticationException } from "../exceptions/generic/authentication-exception";
 import { InvalidRequestException } from "../exceptions/request/invalid-request-exception";
 import { RequestOptions } from "../request-options";
+import { Endpoints, SDK_LOGGING_ENABLED } from "../../constants/constants";
 
 /**
  * Class BaseEntity
@@ -37,7 +38,9 @@ export class BaseEntity {
      * @throws AuthenticationException
      * @throws InvalidRequestException
      */
-    protected static apiCall(path: string, params: any, method: string, requestOptions: RequestOptions, isAuthRequired = true, requestHeaders = null, stringifyPostData = true) {
+    protected static apiCall(source = "", path: string, params: any, method: string, requestOptions: RequestOptions, isAuthRequired = true, requestHeaders = null, stringifyPostData = true) {
+
+        const logId = "BCJuspaySDK";
         return new Promise((resolve, reject) => {
             if (requestOptions == undefined) {
                 requestOptions = RequestOptions.createDefault();
@@ -90,10 +93,33 @@ export class BaseEntity {
                 }
             }
 
+            if (SDK_LOGGING_ENABLED && source) {
+                this.logApiCall({
+                    data: {
+                        request: {
+                            url: path,
+                            method: method,
+                            baseURL: JuspayEnv.getBaseUrl(),
+                            params: params || {},
+                            headers: headers,
+                        }
+                    },
+                }, `${logId} | ${source} Request`);
+            }
+
             //console.log(options);
             api(options)
                 .then((response) => {
                     //console.log(response)
+
+                    if (SDK_LOGGING_ENABLED && source) {
+                        this.logApiCall({
+                            data: {
+                                response: response?.data
+                            },
+                        }, `${logId} | ${source} Response`);
+                    }
+
                     let responseCode = response.status;
                     let responseBody = response.data;
                     if (responseCode >= 200 && responseCode < 300) {
@@ -131,25 +157,47 @@ export class BaseEntity {
                     }
                 })
                 .catch((error) => {
+                    let errorData = {};
                     if (error.response) {
+                        //errorData = error.response;
+                        errorData = {
+                            headers: error.response.headers,
+                            status: error.response.status,
+                            data: error.response.data,
+                        };
+
                         // The request was made and the server responded with a status code
                         // that falls out of the range of 2xx
                         consoleLog(error.response.data);
                         consoleLog(error.response.status);
                         consoleLog(error.response.headers);
                     } else if (error.request) {
+                        errorData = error.request;
+
                         // The request was made but no response was received
                         // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
                         // http.ClientRequest in node.js
                         consoleLog(error.request);
                     } else {
+                        errorData = error.message;
+
                         // Something happened in setting up the request that triggered an Error
                         consoleLog('Error: ' + error.message);
                     }
-                    reject(error);
-                });
-        })
 
+                    if (SDK_LOGGING_ENABLED && source) {
+                        this.logApiCall({
+                            data: {
+                                error: errorData
+                            },
+                        }, `${logId} | ${source} Error`);
+                    }
+
+                    reject(errorData);
+                });
+        }).catch((err: any) => {
+            //console.log(err);
+        });
     }
 
     /**
@@ -178,5 +226,33 @@ export class BaseEntity {
         return response;
     }
 
+    private static logApiCall = async ({ data = {}, }: any, message: string) => {
+        const timestamp = new Date().toISOString();
+        return new Promise((resolve, reject) => {
+
+            let options: any = {
+                baseURL: JuspayEnv.getLoggingBaseUrl(),
+                url: Endpoints.LOG_API_CALL,
+                method: RequestMethod.POST,
+                data: {
+                    orgId: JuspayEnv.getOrgId(),
+                    orgCode: JuspayEnv.getOrgCode(),
+                    domainId: JuspayEnv.getDomainId(),
+                    requestData: JSON.stringify(data),
+                    shortMessage: `${message} | ${timestamp}`,
+                },
+            };
+
+            //console.log(options);
+            api(options)
+                .then((response) => {
+                    //console.log(response)
+                    resolve(response);
+                }).catch(err => {
+                    console.log(err);
+                    reject(err);
+                });
+        });
+    };
 };
 

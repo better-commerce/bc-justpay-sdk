@@ -8,10 +8,9 @@ JuspayEnv.withCredentials("damensch", "713ED52588D405C8D1A75E97424CA6:", "https:
     orgId: "9C549322-7E67-43EE-9C83-F6F4AD486694",
     domainId: "DDACCA23-E299-4345-A0FC-36DA0969A7AF",
 });
-ExpressCheckout.Order.get({ order_id: "15727-453726" })
-    .then(orderStatusResult => {
-        console.log(orderStatusResult);
-    })
-    .catch(error => {
-        console.log(error);
+
+ExpressCheckout.Customer.get("8dcc1805-5922-4dd0-8b45-af8c007748c5")
+//ExpressCheckout.Customer.get("50052a48-5403-4a91-85c6-af3000c7f60a")
+    .then(getCustomerResult => {
+        console.log(getCustomerResult);
     });

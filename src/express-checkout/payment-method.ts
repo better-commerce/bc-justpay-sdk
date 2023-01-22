@@ -2,7 +2,7 @@
 import { InvalidRequestException } from "../models/exceptions/request/invalid-request-exception";
 
 // Other Imports
-import { Endpoints } from "../constants/constants";
+import { Endpoints, PaymentSource } from "../constants/constants";
 import { RequestMethod } from "../constants/enums";
 import { BaseEntity } from "../models/base/base-entity";
 import { stringFormat } from "../utils/format-util";
@@ -48,7 +48,7 @@ export class PaymentMethod extends BaseEntity {
         }
 
         const url = stringFormat(Endpoints.PaymentMethods.LIST, { merchantId: merchantId });
-        let response: any = this.apiCall(url, undefined, RequestMethod.GET, requestOptions);
+        let response: any = this.apiCall(PaymentSource.GET_PAYMENT_METHODS, url, undefined, RequestMethod.GET, requestOptions);
         let paymentMethods = Array();
 
         if ("payment_methods" in response) {
