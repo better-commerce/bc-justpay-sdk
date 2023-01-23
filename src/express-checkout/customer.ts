@@ -60,9 +60,10 @@ export class Customer extends BaseEntity {
             throw new InvalidRequestException();
         }
 
+        const source = this.LOGGING_CONFIG.includes(PaymentSource.CREATE_CUSTOMER) ? PaymentSource.CREATE_CUSTOMER : "";
         return new Promise(async (resolve, reject) => {
             try {
-                let response = await this.apiCall(PaymentSource.CREATE_CUSTOMER, Endpoints.Customer.CREATE_OR_LIST, params, RequestMethod.POST, requestOptions);
+                let response = await this.apiCall(source, Endpoints.Customer.CREATE_OR_LIST, params, RequestMethod.POST, requestOptions);
                 resolve(response);
             } catch (error) {
                 reject(error);
@@ -89,10 +90,11 @@ export class Customer extends BaseEntity {
             throw new InvalidRequestException();
         }
 
+        const source = this.LOGGING_CONFIG.includes(PaymentSource.UPDATE_CUSTOMER) ? PaymentSource.UPDATE_CUSTOMER : "";
         return new Promise(async (resolve, reject) => {
             try {
                 const url = stringFormat(Endpoints.Customer.GET_OR_UPDATE, { id: id });
-                let response = await this.apiCall(PaymentSource.UPDATE_CUSTOMER, url, params, RequestMethod.POST, requestOptions);
+                let response = await this.apiCall(source, url, params, RequestMethod.POST, requestOptions);
                 resolve(response);
             } catch (error) {
                 reject(error);
@@ -113,9 +115,10 @@ export class Customer extends BaseEntity {
      * @throws InvalidRequestException
      */
     static listAll(params: any, requestOptions = undefined) {
+        const source = this.LOGGING_CONFIG.includes(PaymentSource.LIST_ALL_CUSTOMERS) ? PaymentSource.LIST_ALL_CUSTOMERS : "";
         return new Promise(async (resolve, reject) => {
             try {
-                let response = await this.apiCall(PaymentSource.LIST_ALL_CUSTOMERS, Endpoints.Customer.CREATE_OR_LIST, params, RequestMethod.GET, requestOptions);
+                let response = await this.apiCall(source, Endpoints.Customer.CREATE_OR_LIST, params, RequestMethod.GET, requestOptions);
                 resolve(response);
             } catch (error) {
                 reject(error);
@@ -140,10 +143,11 @@ export class Customer extends BaseEntity {
             throw new InvalidRequestException();
         }
 
+        const source = this.LOGGING_CONFIG.includes(PaymentSource.GET_CUSTOMER) ? PaymentSource.GET_CUSTOMER : "";
         return new Promise(async (resolve, reject) => {
             try {
                 const url = stringFormat(Endpoints.Customer.GET_OR_UPDATE, { id: id });
-                let response = await this.apiCall(PaymentSource.GET_CUSTOMER, url, undefined, RequestMethod.GET, requestOptions);
+                let response = await this.apiCall(source, url, undefined, RequestMethod.GET, requestOptions);
                 resolve(response);
             } catch (error) {
                 reject(error);

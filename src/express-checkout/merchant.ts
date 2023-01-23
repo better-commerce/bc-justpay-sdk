@@ -34,10 +34,11 @@ export class Merchant extends BaseEntity {
             throw new InvalidRequestException();
         }
 
+        const source = this.LOGGING_CONFIG.includes(PaymentSource.GET_PAYMENT_METHODS) ? PaymentSource.GET_PAYMENT_METHODS : "";
         return new Promise(async (resolve, reject) => {
             try {
                 const url = stringFormat(Endpoints.Merchant.PAYMENT_METHODS, { merchantId: JuspayEnv.getMerchantId() });
-                let response = await this.apiCall(PaymentSource.GET_PAYMENT_METHODS, url, params, RequestMethod.GET, requestOptions);
+                let response = await this.apiCall(source, url, params, RequestMethod.GET, requestOptions);
                 resolve(response);
             } catch (error) {
                 reject(error);

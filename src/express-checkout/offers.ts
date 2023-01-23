@@ -32,9 +32,10 @@ export class Offers extends BaseEntity {
             throw new InvalidRequestException();
         }
 
+        const source = this.LOGGING_CONFIG.includes(PaymentSource.LIST_ALL_OFFERS) ? PaymentSource.LIST_ALL_OFFERS : "";
         return new Promise(async (resolve, reject) => {
             try {
-                let response = await this.apiCall(PaymentSource.LIST_ALL_OFFERS, Endpoints.Offers.LIST, params, RequestMethod.POST, requestOptions, true, {
+                let response = await this.apiCall(source, Endpoints.Offers.LIST, params, RequestMethod.POST, requestOptions, true, {
                     'Content-Type': 'application/json',
                 }, false);
                 resolve(response);
