@@ -47,8 +47,8 @@ export class Card extends BaseEntity {
         if (params == undefined || params.length == 0) {
             throw new InvalidRequestException();
         }
-
-        let response = this.apiCall(PaymentSource.TOKENIZE_CARD, Endpoints.Card.TOKENIZE, params, RequestMethod.POST, requestOptions);
+        const source = this.LOGGING_CONFIG.includes(PaymentSource.TOKENIZE_CARD) ? PaymentSource.TOKENIZE_CARD : "";
+        let response = this.apiCall(source, Endpoints.Card.TOKENIZE, params, RequestMethod.POST, requestOptions);
         return response;
     }
 
@@ -69,7 +69,8 @@ export class Card extends BaseEntity {
             throw new InvalidRequestException();
         }
 
-        let response = this.apiCall(PaymentSource.ADD_CARD, Endpoints.Card.ADD, params, RequestMethod.POST, requestOptions);
+        const source = this.LOGGING_CONFIG.includes(PaymentSource.ADD_CARD) ? PaymentSource.ADD_CARD : "";
+        let response = this.apiCall(source, Endpoints.Card.ADD, params, RequestMethod.POST, requestOptions);
         //return new Card(response);
         return response;
     }
@@ -91,10 +92,11 @@ export class Card extends BaseEntity {
             throw new InvalidRequestException();
         }
 
+        const source = this.LOGGING_CONFIG.includes(PaymentSource.LIST_ALL_CARDS) ? PaymentSource.LIST_ALL_CARDS : "";
         return new Promise(async (resolve, reject) => {
             try {
                 const url = stringFormat(Endpoints.Card.LIST, { customerId: params?.customer_id });
-                let response = this.apiCall(PaymentSource.LIST_ALL_CARDS, url, {}, RequestMethod.GET, requestOptions);
+                let response = this.apiCall(source, url, {}, RequestMethod.GET, requestOptions);
                 resolve(response);
             } catch (error) {
                 reject(error);
@@ -119,9 +121,10 @@ export class Card extends BaseEntity {
             throw new InvalidRequestException();
         }
 
+        const source = this.LOGGING_CONFIG.includes(PaymentSource.DELETE_CARD) ? PaymentSource.DELETE_CARD : "";
         return new Promise(async (resolve, reject) => {
             try {
-                let response: any = await this.apiCall(PaymentSource.DELETE_CARD, Endpoints.Card.DELETE, params, RequestMethod.POST, requestOptions);
+                let response: any = await this.apiCall(source, Endpoints.Card.DELETE, params, RequestMethod.POST, requestOptions);
                 resolve(response?.deleted);
             } catch (error) {
                 reject(error);
@@ -134,7 +137,8 @@ export class Card extends BaseEntity {
             throw new InvalidRequestException();
         }
 
-        let response: any = this.apiCall(PaymentSource.GET_CARD_INFO, `${Endpoints.Card.BIN_INFO}/${params}`, undefined, RequestMethod.GET, requestOptions);
+        const source = this.LOGGING_CONFIG.includes(PaymentSource.GET_CARD_INFO) ? PaymentSource.GET_CARD_INFO : "";
+        let response: any = this.apiCall(source, `${Endpoints.Card.BIN_INFO}/${params}`, undefined, RequestMethod.GET, requestOptions);
         return response;
     }
 

@@ -26,7 +26,8 @@ export class UPI extends BaseEntity {
             throw new InvalidRequestException();
         }
 
-        let response = this.apiCall(PaymentSource.VERIFY_VPA, Endpoints.UPI.VERIFY_VPA, params, RequestMethod.POST, requestOptions);
+        const source = this.LOGGING_CONFIG.includes(PaymentSource.VERIFY_VPA) ? PaymentSource.VERIFY_VPA : "";
+        let response = this.apiCall(source, Endpoints.UPI.VERIFY_VPA, params, RequestMethod.POST, requestOptions);
         return response;
     }
 
@@ -35,8 +36,9 @@ export class UPI extends BaseEntity {
             throw new InvalidRequestException();
         }
 
+        const source = this.LOGGING_CONFIG.includes(PaymentSource.COLLECT_UPI_PAYMENT) ? PaymentSource.COLLECT_UPI_PAYMENT : "";
         const url = `${Endpoints.Payment.TRANSACTIONS}`;
-        let response = this.apiCall(PaymentSource.COLLECT_UPI_PAYMENT, url, params, RequestMethod.POST, requestOptions);
+        let response = this.apiCall(source, url, params, RequestMethod.POST, requestOptions);
         return response;
     }
 }
