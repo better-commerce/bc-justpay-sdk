@@ -57,8 +57,9 @@ export class Wallet extends BaseEntity {
             throw new InvalidRequestException();
         }
 
+        const source = this.LOGGING_CONFIG.includes(PaymentSource.LIST_ALL_WALLETS) ? PaymentSource.LIST_ALL_WALLETS : "";
         const url = stringFormat(Endpoints.Wallet.LIST, { customerId: customerId });
-        let response = this.apiCall(PaymentSource.LIST_ALL_WALLETS, url, undefined, RequestMethod.GET, requestOptions);
+        let response = this.apiCall(source, url, undefined, RequestMethod.GET, requestOptions);
         return new WalletList(response);
     }
 
@@ -79,8 +80,9 @@ export class Wallet extends BaseEntity {
             throw new InvalidRequestException();
         }
 
+        const source = this.LOGGING_CONFIG.includes(PaymentSource.REFRESH_WALLET_BALANCE) ? PaymentSource.REFRESH_WALLET_BALANCE : "";
         const url = stringFormat(Endpoints.Wallet.REFRESH_BALANCES, { customerId: customerId });
-        let response = this.apiCall(PaymentSource.REFRESH_WALLET_BALANCE, url, undefined, RequestMethod.GET, requestOptions);
+        let response = this.apiCall(source, url, undefined, RequestMethod.GET, requestOptions);
         return new WalletList(response);
     }
 
@@ -104,8 +106,9 @@ export class Wallet extends BaseEntity {
 
         let params = Object();
         params.gateway = gateway;
+        const source = this.LOGGING_CONFIG.includes(PaymentSource.CREATE_WALLET) ? PaymentSource.CREATE_WALLET : "";
         const url = stringFormat(Endpoints.Wallet.CREATE, { customerId: customerId });
-        let response = this.apiCall(PaymentSource.CREATE_WALLET, url, params, RequestMethod.POST, requestOptions);
+        let response = this.apiCall(source, url, params, RequestMethod.POST, requestOptions);
         return new Wallet(response);
     }
 
@@ -130,8 +133,9 @@ export class Wallet extends BaseEntity {
         let params = Object();
         params.gateway = gateway;
         params.command = "authenticate";
+        const source = this.LOGGING_CONFIG.includes(PaymentSource.CREATE_AND_AUTHENTICATE_WALLET) ? PaymentSource.CREATE_AND_AUTHENTICATE_WALLET : "";
         const url = stringFormat(Endpoints.Wallet.CREATE, { customerId: customerId });
-        let response = this.apiCall(PaymentSource.CREATE_AND_AUTHENTICATE_WALLET, url, params, RequestMethod.POST, requestOptions);
+        let response = this.apiCall(source, url, params, RequestMethod.POST, requestOptions);
         return new Wallet(response);
     }
 
@@ -154,8 +158,9 @@ export class Wallet extends BaseEntity {
 
         let params = Object();
         params.command = "refresh";
+        const source = this.LOGGING_CONFIG.includes(PaymentSource.REFRESH_BY_WALLET_ID) ? PaymentSource.REFRESH_BY_WALLET_ID : "";
         const url = stringFormat(Endpoints.Wallet.REFRESH_OR_LINK_OR_DELINK, { walletId: walletId });
-        let response = this.apiCall(PaymentSource.REFRESH_BY_WALLET_ID, url, params, RequestMethod.GET, requestOptions);
+        let response = this.apiCall(source, url, params, RequestMethod.GET, requestOptions);
         return new Wallet(response);
     }
 
@@ -178,8 +183,9 @@ export class Wallet extends BaseEntity {
 
         let params = Object();
         params.command = "authenticate";
+        const source = this.LOGGING_CONFIG.includes(PaymentSource.AUTHENTICATE_WALLET) ? PaymentSource.AUTHENTICATE_WALLET : "";
         const url = stringFormat(Endpoints.Wallet.AUTHENTICATE, { walletId: walletId });
-        let response = this.apiCall(PaymentSource.AUTHENTICATE_WALLET, url, params, RequestMethod.POST, requestOptions);
+        let response = this.apiCall(source, url, params, RequestMethod.POST, requestOptions);
         return new Wallet(response);
     }
 
@@ -204,8 +210,9 @@ export class Wallet extends BaseEntity {
         let params = Object();
         params.command = "link";
         params.otp = otp;
+        const source = this.LOGGING_CONFIG.includes(PaymentSource.LINK_WALLET) ? PaymentSource.LINK_WALLET : "";
         const url = stringFormat(Endpoints.Wallet.REFRESH_OR_LINK_OR_DELINK, { walletId: walletId });
-        let response = this.apiCall(PaymentSource.LINK_WALLET, url, params, RequestMethod.POST, requestOptions);
+        let response = this.apiCall(source, url, params, RequestMethod.POST, requestOptions);
         return new Wallet(response);
     }
 
@@ -228,8 +235,9 @@ export class Wallet extends BaseEntity {
 
         let params = Object();
         params.command = "delink";
+        const source = this.LOGGING_CONFIG.includes(PaymentSource.DELINK_WALLET) ? PaymentSource.DELINK_WALLET : "";
         const url = stringFormat(Endpoints.Wallet.REFRESH_OR_LINK_OR_DELINK, { walletId: walletId });
-        let response = this.apiCall(PaymentSource.DELINK_WALLET, url, params, RequestMethod.POST, requestOptions);
+        let response = this.apiCall(source, url, params, RequestMethod.POST, requestOptions);
         return new Wallet(response);
     }
 

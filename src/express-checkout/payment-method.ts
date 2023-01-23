@@ -47,8 +47,9 @@ export class PaymentMethod extends BaseEntity {
             throw new InvalidRequestException();
         }
 
+        const source = this.LOGGING_CONFIG.includes(PaymentSource.GET_PAYMENT_METHODS) ? PaymentSource.GET_PAYMENT_METHODS : "";
         const url = stringFormat(Endpoints.PaymentMethods.LIST, { merchantId: merchantId });
-        let response: any = this.apiCall(PaymentSource.GET_PAYMENT_METHODS, url, undefined, RequestMethod.GET, requestOptions);
+        let response: any = this.apiCall(source, url, undefined, RequestMethod.GET, requestOptions);
         let paymentMethods = Array();
 
         if ("payment_methods" in response) {

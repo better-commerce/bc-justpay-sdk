@@ -16,13 +16,24 @@ import { APIException } from "../exceptions/api/api-exception";
 import { AuthenticationException } from "../exceptions/generic/authentication-exception";
 import { InvalidRequestException } from "../exceptions/request/invalid-request-exception";
 import { RequestOptions } from "../request-options";
-import { Endpoints, SDK_LOGGING_ENABLED } from "../../constants/constants";
+import { Endpoints, PaymentSource, SDK_LOGGING_ENABLED } from "../../constants/constants";
 
 /**
  * Class BaseEntity
  *
  */
 export class BaseEntity {
+
+    protected static LOGGING_CONFIG = [
+        PaymentSource.CREATE_ORDER,
+        PaymentSource.GET_ORDER,
+        PaymentSource.GET_ORDER_STATUS,
+        PaymentSource.CREDIT_DEBIT_CARD_PAYMENT,
+        PaymentSource.NETBANKING_PAYMENT,
+        PaymentSource.WALLET_PAYMENT,
+        PaymentSource.UPI_INTENT_PAYMENT,
+        PaymentSource.COLLECT_UPI_PAYMENT,
+    ];
 
     /**
      *

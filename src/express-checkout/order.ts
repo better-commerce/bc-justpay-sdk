@@ -102,9 +102,10 @@ export class Order extends BaseEntity {
             throw new InvalidRequestException();
         }
 
+        const source = this.LOGGING_CONFIG.includes(PaymentSource.CREATE_ORDER) ? PaymentSource.CREATE_ORDER : "";
         return new Promise(async (resolve, reject) => {
             try {
-                let response: any = await this.apiCall(PaymentSource.GET_ORDER, Endpoints.Order.CREATE, params, RequestMethod.POST, requestOptions);
+                let response: any = await this.apiCall(source, Endpoints.Order.CREATE, params, RequestMethod.POST, requestOptions);
                 response = Order.addInputParamsToResponse(params, response);
                 response = Order.updateOrderResponseStructure(response);
                 resolve(new Order(response));
@@ -115,10 +116,11 @@ export class Order extends BaseEntity {
     }
 
     static get(params: string, requestOptions = undefined) {
+        const source = this.LOGGING_CONFIG.includes(PaymentSource.GET_ORDER) ? PaymentSource.GET_ORDER : "";
         return new Promise(async (resolve, reject) => {
             try {
                 const url = stringFormat(Endpoints.Order.GET, { orderId: params });
-                let response = this.apiCall(PaymentSource.GET_ORDER, url, undefined, RequestMethod.GET, requestOptions);
+                let response = this.apiCall(source, url, undefined, RequestMethod.GET, requestOptions);
                 resolve(response);
             } catch (error) {
                 reject(error);
@@ -143,9 +145,10 @@ export class Order extends BaseEntity {
             throw new InvalidRequestException();
         }
 
+        const source = this.LOGGING_CONFIG.includes(PaymentSource.GET_ORDER_STATUS) ? PaymentSource.GET_ORDER_STATUS : "";
         return new Promise(async (resolve, reject) => {
             try {
-                let response: any = await this.apiCall(PaymentSource.GET_ORDER_STATUS, Endpoints.Order.STATUS, params, RequestMethod.POST, requestOptions);
+                let response: any = await this.apiCall(source, Endpoints.Order.STATUS, params, RequestMethod.POST, requestOptions);
                 response = Order.updateOrderResponseStructure(response);
                 resolve(new Order(response));
             } catch (error) {
@@ -171,10 +174,11 @@ export class Order extends BaseEntity {
             throw new InvalidRequestException();
         }
 
+        const source = this.LOGGING_CONFIG.includes(PaymentSource.UPDATE_ORDER) ? PaymentSource.UPDATE_ORDER : "";
         return new Promise(async (resolve, reject) => {
             try {
                 //const url = stringFormat(Endpoints.Order.UPDATE, { orderId: params?.orderId });
-                let response = await this.apiCall(PaymentSource.UPDATE_ORDER, Endpoints.Order.UPDATE, {
+                let response = await this.apiCall(source, Endpoints.Order.UPDATE, {
                     order_id: params?.orderId,
                     amount: params?.amount
                 }, RequestMethod.POST, requestOptions);
@@ -198,9 +202,10 @@ export class Order extends BaseEntity {
      * @throws InvalidRequestException
      */
     static listAll(params: any, requestOptions = undefined) {
+        const source = this.LOGGING_CONFIG.includes(PaymentSource.LIST_ALL_ORDERS) ? PaymentSource.LIST_ALL_ORDERS : "";
         return new Promise(async (resolve, reject) => {
             try {
-                let response = await this.apiCall(PaymentSource.LIST_ALL_ORDERS, Endpoints.Order.LIST, params, RequestMethod.GET, requestOptions);
+                let response = await this.apiCall(source, Endpoints.Order.LIST, params, RequestMethod.GET, requestOptions);
                 resolve(new OrderList(response));
             } catch (error) {
                 reject(error);
@@ -225,9 +230,10 @@ export class Order extends BaseEntity {
             throw new InvalidRequestException();
         }
 
+        const source = this.LOGGING_CONFIG.includes(PaymentSource.REFUND_ORDER) ? PaymentSource.REFUND_ORDER : "";
         return new Promise(async (resolve, reject) => {
             try {
-                let response: any = await this.apiCall(PaymentSource.REFUND_ORDER, Endpoints.Order.REFUND, params, RequestMethod.POST, requestOptions);
+                let response: any = await this.apiCall(source, Endpoints.Order.REFUND, params, RequestMethod.POST, requestOptions);
                 response = Order.updateOrderResponseStructure(response);
                 resolve(new Order(response));
             } catch (error) {
