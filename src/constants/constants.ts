@@ -95,7 +95,7 @@ export const UPI_INTENT_LINKS = [
     },
 ];
 
-export const SDK_LOGGING_ENABLED = true;
+export const SDK_LOGGING_ENABLED = false;
 export enum PaymentSource {
     TOKENIZE_CARD = "TokenizeCard",
     ADD_CARD = "AddCard",

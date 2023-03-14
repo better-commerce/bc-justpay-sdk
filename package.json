@@ -1,6 +1,6 @@
 {
   "name": "@better-commerce/bc-juspay-sdk",
-  "version": "0.4.4",
+  "version": "0.4.6",
   "description": "uspay NodeJS SDK enables BetterCommerce client applications to integrate with JusPay merchant payment system.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

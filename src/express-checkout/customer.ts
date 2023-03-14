@@ -64,8 +64,10 @@ export class Customer extends BaseEntity {
         return new Promise(async (resolve, reject) => {
             try {
                 let response = await this.apiCall(source, Endpoints.Customer.CREATE_OR_LIST, params, RequestMethod.POST, requestOptions);
+                //consoleLog(response, "response");
                 resolve(response);
             } catch (error) {
+                //consoleLog({ error: error }, "error");
                 reject(error);
             }
         });
