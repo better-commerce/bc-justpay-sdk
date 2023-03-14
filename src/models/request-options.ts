@@ -44,4 +44,6 @@ export class RequestOptions {
     return this.apiKey;
   }
 
+  parseError: boolean;
+
 };

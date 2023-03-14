@@ -172,7 +172,7 @@ export class BaseEntity {
                     if (error.response) {
                         //errorData = error.response;
                         errorData = {
-                            headers: error.response.headers,
+                            //headers: error.response.headers,
                             status: error.response.status,
                             data: error.response.data,
                         };
@@ -204,7 +204,11 @@ export class BaseEntity {
                         }, `${logId} | ${source} Error`);
                     }
 
-                    reject(errorData);
+                    if (!requestOptions?.parseError) {
+                        reject(errorData);
+                    } else {
+                        resolve({ error: errorData });
+                    }
                 });
         }).catch((err: any) => {
             //console.log(err);
