@@ -58,7 +58,7 @@ export class BaseEntity {
             }
             let headers = {
                 'x-merchantid': JuspayEnv.getMerchantId(),
-                //'merchant-id': JuspayEnv.getMerchantId(),
+                'merchant-id': JuspayEnv.getMerchantId(),
                 'version': JuspayEnv.getApiVersion(),
                 'Content-Type': !requestHeaders ? 'application/x-www-form-urlencoded' : requestHeaders["Content-Type"],
             };
