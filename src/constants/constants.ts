@@ -93,6 +93,10 @@ export const UPI_INTENT_LINKS = [
         key: "BHIM",
         prefixUrl: "BHIM://",
     },
+    {
+        key: "CRED",
+        prefixUrl: "cred://upi/",
+    },
 ];
 
 export const SDK_LOGGING_ENABLED = false;
