@@ -95,7 +95,7 @@ export const UPI_INTENT_LINKS = [
     },
     {
         key: "CRED",
-        prefixUrl: "cred://upi/",
+        prefixUrl: "credpay://upi/",
     },
 ];
 
